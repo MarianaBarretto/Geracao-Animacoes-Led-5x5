@@ -12,6 +12,17 @@
 #define NUM_PIXELS 25 //número de LEDs
 #define OUT_PIN 19 //pino de onde os LEDs estão conectados
 
+// função para definir cor RGB para LEDs da Matriz
+uint32_t matriz_RGB(double b, double r, double g){
+    unsigned char R, G, B;
+    R = r * 255;
+    G = g * 255;
+    B = b * 255;
+    return (G << 24) | (R << 16) | (B << 8);
+}
+
+
+
 //configurando o teclado matricial
 #define ROWS 4 // 4 linhas
 #define COLS 4 // 4 colunas
@@ -42,9 +53,8 @@ void configurar_teclado(){
     }
 
 }
-pe
-// função para ler teclas
 
+// função para ler teclas
 char leitura_teclas(){
     for (int row = 0; row < ROWS; row++){
         gpio_put(row_pins[row], 0); // ativa a linha atual
@@ -60,6 +70,10 @@ char leitura_teclas(){
     } 
     return '\0'; // retorna isso quando nenhuma tecla pressionada
 }
+
+
+
+
 
 
 
