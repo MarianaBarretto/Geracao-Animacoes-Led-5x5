@@ -139,7 +139,7 @@ uint32_t matrix_rgb(double r, double g, double b) {
 }
 
 //rotina para acionar a matrix de leds - ws2812b
-void desenho_pio(double *desenho, int cor, double intensidade_r, double intensidade_g, double intensidade_b){
+void desenho_pio(double *desenho, int cor, double r, double g, double b){
     uint32_t valor_led;
     for (int16_t i = 0; i < NUM_PIXELS; i++) {
         if (cor == 1) { //liga todos os LEDs na cor vermelha
