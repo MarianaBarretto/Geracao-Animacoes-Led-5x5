@@ -51,19 +51,16 @@ double carinha_feliz_piscando[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
                                        0.0, 0.0, 0.0, 0.0, 0.0,
                                        3.0, 0.0, 0.0, 0.0, 3.0,
                                        0.0, 3.0, 3.0, 3.0, 0.0};
-
 double carinha_feliz_piscando_1[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
                                          0.0, 0.0, 0.0, 3.0, 0.0, 
                                          0.0, 0.0, 0.0, 0.0, 0.0,
                                          3.0, 0.0, 0.0, 0.0, 3.0,
                                          0.0, 3.0, 3.0, 3.0, 0.0};
-
 double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0, 
                                         0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0};                                                                                                                                  
-
                    
 // ADICIONE SUAS IMAGENS
 
@@ -202,6 +199,28 @@ void menu() {
     printf("# - Desenho a definir\n");
 }
 
+void animação_mariana() {
+    desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando                
+    desenho_pio(carinha_feliz_piscando_2, valor_led, pio, sm, r, g, b);
+}
+
 //função principal
 int main() {
     PIO pio = pio0; 
@@ -233,35 +252,94 @@ int main() {
 
     while (true) {
         char key = scan_keypad();
-        if (key != '\0') {
-            printf("\n>> Você pressionou a tecla: %c <<\n", key);
+        
+        if (key != 0) {  // Verifica se alguma tecla foi pressionada
+            switch (key) {
+
+            case 'A':  // Desliga todos os LEDs
+                // Adiconar rotina aqui.
+                printf("LEDs desligados.\n");   
+            break;
+
+            case 'B':  // Liga todos os LEDs como azul com intensidade 100%
+                // Adiconar rotina aqui.
+                printf("LEDs azuis ligados com intensidade de 100%%.\n");   
+            break;
+
+            case 'C':  // Liga todos os LEDs como vermelho com intensidade 80%
+                // Adiconar rotina aqui.
+                printf("LEDs vermelhos ligados com intensidade de 80%%.\n");   
+            break;
+
+            case 'D':  // Liga todos os LEDs como verde com intensidade 50%
+                // Adiconar rotina aqui.
+                printf("LEDs verdes ligados com intensidade de 50%%.\n");   
+            break;
+
+            case '#':  // Liga todos os LEDs como branco com intensidade 20%
+                // Adiconar rotina aqui.
+                printf("LEDs brancos ligados com intensidade de 20%%.\n");   
+            break;
             
-             
+            case '*':  // Raspberry sai do modo de execução e habilita o modo de gravação (reboot)
+                // Adiconar rotina aqui.
+                printf("Regravação do Raspberry Pi Pico W inciada.\n");   
+            break;
+            
+            case '1':  // Animação da Mariana
+                animação_mariana(); // Adiconada a rotina aqui
+                printf("Animação do botão 1 foi acionada.\n");
+            break;
 
-            if (key == '1') {
-                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);
-                Tocar_piscando(); // Toca o barulhinho piscando
-                desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);                
-                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);
-                Tocar_piscando(); // Toca o barulhinho piscando
-                desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);                
-                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);
-                Tocar_piscando(); // Toca o barulhinho piscando
-                desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);                
-                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);
-                Tocar_piscando(); // Toca o barulhinho piscando                
-                desenho_pio(carinha_feliz_piscando_2, valor_led, pio, sm, r, g, b);
+            case '2':  // Animação da Helen
+                // Adiconar rotina aqui.
+                printf("Animação do botão 2 foi acionada.\n");
+            break;
 
-            } else if (key == '2') {            
-                Tocar_melodia(); // Toca a melodia             
-            } // ADICIONE SUAS TECLAS
+            case '3':  // Animação do Kauan
+                // Adiconar rotina aqui.
+                printf("Animação do botão 3 foi acionada.\n");
+            break;
+
+            case '4':  // Animação do Lucas
+                // Adiconar rotina aqui.
+                printf("Animação do botão 4 foi acionada.\n");
+            break;
+
+            case '5':  // Animação da Edna
+                // Adiconar rotina aqui.
+                printf("Animação do botão 5 foi acionada.\n");
+            break;
+
+            case '6':  // Animação do Daniel
+                // Adiconar rotina aqui.
+                printf("Animação do botão 6 foi acionada.\n");
+            break;
+
+            case '7':  // Animação do Alexandro
+                // Adiconar rotina aqui.
+                printf("Animação do botão 7 foi acionada.\n");
+            break;
+
+            case '8':  // Animação do Israel
+                // Adiconar rotina aqui.
+                printf("Animação do botão 8 foi acionada.\n");
+            break;
+
+            case '9':  // Animação do Ylo
+                // Adiconar rotina aqui.
+                printf("Animação do botão 9 foi acionada.\n");
+            break;
+
+            case '0':  // Melodia criada pela Mariana
+                Tocar_melodia(); // Toca a melodia
+                printf("Melodia musical foi acionada.\n");
+            break;
+
+            default:
+                printf("Tecla %c pressionada, sem acao atribuida.\n", key);
+            break;
+            } 
         }
 
         sleep_ms(100);
