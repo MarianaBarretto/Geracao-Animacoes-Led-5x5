@@ -58,31 +58,7 @@ double carinha_feliz_piscando_1[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
                                          3.0, 0.0, 0.0, 0.0, 3.0,
                                          0.0, 3.0, 3.0, 3.0, 0.0};
 
-double carinha_feliz_piscando_2[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                         0.0, 3.0, 0.0, 3.0, 0.0, 
-                                         0.0, 0.0, 0.0, 0.0, 0.0,
-                                         3.0, 0.0, 0.0, 0.0, 3.0,
-                                         0.0, 3.0, 3.0, 3.0, 0.0};
-
-double carinha_feliz_piscando_3[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                         0.0, 0.0, 0.0, 3.0, 0.0, 
-                                         0.0, 0.0, 0.0, 0.0, 0.0,
-                                         3.0, 0.0, 0.0, 0.0, 3.0,
-                                         0.0, 3.0, 3.0, 3.0, 0.0};
-
-double carinha_feliz_piscando_4[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
-                                        0.0, 3.0, 0.0, 3.0, 0.0, 
-                                        0.0, 0.0, 0.0, 0.0, 0.0,
-                                        3.0, 0.0, 0.0, 0.0, 3.0,
-                                        0.0, 3.0, 3.0, 3.0, 0.0};
-
-double carinha_feliz_piscando_5[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
-                                        0.0, 0.0, 0.0, 3.0, 0.0, 
-                                        0.0, 0.0, 0.0, 0.0, 0.0,
-                                        3.0, 0.0, 0.0, 0.0, 3.0,
-                                        0.0, 3.0, 3.0, 3.0, 0.0};
-
-double carinha_feliz_piscando_6[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
+double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0, 
                                         0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0,
@@ -264,21 +240,25 @@ int main() {
 
             if (key == '1') {
                 desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(300);
+                sleep_ms(400);
                 Tocar_piscando(); // Toca o barulhinho piscando
                 desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
-                sleep_ms(300);                
+                sleep_ms(400);                
+                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+                sleep_ms(400);
+                Tocar_piscando(); // Toca o barulhinho piscando
+                desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
+                sleep_ms(400);                
+                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+                sleep_ms(400);
+                Tocar_piscando(); // Toca o barulhinho piscando
+                desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
+                sleep_ms(400);                
+                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+                sleep_ms(400);
+                Tocar_piscando(); // Toca o barulhinho piscando                
                 desenho_pio(carinha_feliz_piscando_2, valor_led, pio, sm, r, g, b);
-                sleep_ms(300);
-                Tocar_piscando(); // Toca o barulhinho piscando
-                desenho_pio(carinha_feliz_piscando_3, valor_led, pio, sm, r, g, b);
-                sleep_ms(300);                
-                desenho_pio(carinha_feliz_piscando_4, valor_led, pio, sm, r, g, b);
-                sleep_ms(300);
-                Tocar_piscando(); // Toca o barulhinho piscando
-                desenho_pio(carinha_feliz_piscando_5, valor_led, pio, sm, r, g, b);
-                sleep_ms(300);                
-                desenho_pio(carinha_feliz_piscando_6, valor_led, pio, sm, r, g, b);                 
+
             } else if (key == '2') {            
                 Tocar_melodia(); // Toca a melodia             
             } // ADICIONE SUAS TECLAS
