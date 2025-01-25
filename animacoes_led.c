@@ -195,7 +195,7 @@ void menu() {
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Carinha Feliz Piscando\n");
     printf("A - Desenho a definir\n");
-    printf("B - Desenho a definir\n");
+    printf("B - Animação PONG\n"); // O jogo Pong foi lançado em 1972. Ele foi criado por Nolan Bushnell e Ted Dabney, fundadores da Atari
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
     printf("D - Desenho a definir\n");
     printf("* - Desenho a definir\n");
@@ -204,7 +204,7 @@ void menu() {
 
 void animacaoPONG_RGB(){
 
-     while (true) {
+     while (true) {  // matriz cria um animação consiste de duas bases e uma bola  
     int matriz [5][5][3] = {
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
@@ -244,7 +244,7 @@ void animacaoPONG_RGB(){
   }
 }
 
-int matriz3 [5][5][3] = {
+int matriz3 [5][5][3] = { // 5 pra linhas e colunas totalizando a matriz de 25 led 3 pra RGB
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
@@ -252,16 +252,16 @@ int matriz3 [5][5][3] = {
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
 };
    
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
+    for(int linha = 0; linha < 5; linha++){  
+    for(int coluna = 0; coluna < 5; coluna++){ // matriz pra percorrer as linhas da
       int posicao = getIndex(linha, coluna);
       npSetLED(posicao, matriz3[coluna][linha][0], matriz3[coluna][linha][1], matriz3[coluna][linha][2]);
     }
   }
 
-      npWrite();
-      sleep_ms(1500);
-      npClear();
+      npWrite(); //informação pro led
+      sleep_ms(1500);// milisengundos ou seja, 1,5 segundos 
+      npClear(); // limpa a ação
 
   int matriz4 [5][5][3] = {
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
