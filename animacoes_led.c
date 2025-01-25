@@ -50,21 +50,23 @@ char KEY_MAP[16] = {
 };
 
 //vetor para criar imagem na matriz de led - 1
-double carinha_feliz_piscando[25] =   {0, 0, 0, 0, 0,
-                                       0, 3, 0, 3, 0, 
-                                       0, 0, 0, 0, 0,
-                                       3, 0, 0, 0, 3,
-                                       0, 3, 3, 3, 0};
-double carinha_feliz_piscando_1[25] = {0, 0, 0, 0, 0,
-                                       0, 0, 0, 3, 0, 
-                                       0, 0, 0, 0, 0,
-                                       3, 0, 0, 0, 3,
-                                       0, 3, 3, 3, 0};
-double carinha_feliz_piscando_2[25] = {0, 0, 0, 0, 0,
-                                       0, 0, 0, 0, 0,
-                                       0, 0, 0, 0, 0,
-                                       0, 0, 0, 0, 0,
-                                       0, 0, 0, 0, 0};                                                                                                                                  
+double carinha_feliz_piscando[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
+                                       0.0, 3.0, 0.0, 3.0, 0.0, 
+                                       0.0, 0.0, 0.0, 0.0, 0.0,
+                                       3.0, 0.0, 0.0, 0.0, 3.0,
+                                       0.0, 3.0, 3.0, 3.0, 0.0};
+
+double carinha_feliz_piscando_1[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
+                                         0.0, 0.0, 0.0, 3.0, 0.0, 
+                                         0.0, 0.0, 0.0, 0.0, 0.0,
+                                         3.0, 0.0, 0.0, 0.0, 3.0,
+                                         0.0, 3.0, 3.0, 3.0, 0.0};
+
+double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
+                                        0.0, 0.0, 0.0, 0.0, 0.0, 
+                                        0.0, 0.0, 0.0, 0.0, 0.0,
+                                        0.0, 0.0, 0.0, 0.0, 0.0,
+                                        0.0, 0.0, 0.0, 0.0, 0.0};                                                                                                                                  
                    
 // ADICIONE SUAS IMAGENS
 
@@ -210,27 +212,27 @@ void menu() {
     printf("# - Desenho a definir\n");
 }
 
-/*void animação_mariana() {
-    desenho_pio(carinha_feliz_piscando, 1.0, 1.0, 1.0);
+void animação_mariana() {
+    desenho_pio(carinha_feliz_piscando, 6, 1.0, 1.0, 1.0);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando_1, 6, 1.0, 1.0, 1.0);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando, 6, 1.0, 1.0, 1.0);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando_1, 6, 1.0, 1.0, 1.0);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando, 6, 1.0, 1.0, 1.0);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando_1, 6, 1.0, 1.0, 1.0);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando, 6, 1.0, 1.0, 1.0);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando                
-    desenho_pio(carinha_feliz_piscando_2, 1.0, 1.0, 1.0);
-}*/
+    desenho_pio(carinha_feliz_piscando_2, 6, 1.0, 1.0, 1.0);
+}
 
 //função principal
 int main() {
@@ -298,7 +300,7 @@ int main() {
             break;
             
             case '1':  // Animação da Mariana
-                //animação_mariana(); // Adiconada a rotina aqui
+                animação_mariana(); // Adiconada a rotina aqui
                 printf("Animação do botão 1 foi acionada.\n");
             break;
 
