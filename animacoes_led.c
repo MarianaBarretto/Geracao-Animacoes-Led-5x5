@@ -49,19 +49,19 @@ char KEY_MAP[16] = {
     '*', '0', '#', 'D'
 };
 
-//vetor para criar imagem na matriz de led - 1
+//Vetores de imagens - Valores devem variar de 0 a 1 (de acordo com a porcentagem de intensidade)
+
+//Animação 1
 double carinha_feliz_piscando[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                       0.0, 3.0, 0.0, 3.0, 0.0, 
+                                       0.0, 1.0, 0.0, 1.0, 0.0, 
                                        0.0, 0.0, 0.0, 0.0, 0.0,
-                                       3.0, 0.0, 0.0, 0.0, 3.0,
-                                       0.0, 3.0, 3.0, 3.0, 0.0};
-
+                                       1.0, 0.0, 0.0, 0.0, 1.0,
+                                       0.0, 1.0, 1.0, 1.0, 0.0};
 double carinha_feliz_piscando_1[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                         0.0, 0.0, 0.0, 3.0, 0.0, 
+                                         0.0, 0.0, 0.0, 1.0, 0.0, 
                                          0.0, 0.0, 0.0, 0.0, 0.0,
-                                         3.0, 0.0, 0.0, 0.0, 3.0,
-                                         0.0, 3.0, 3.0, 3.0, 0.0};
-
+                                         1.0, 0.0, 0.0, 0.0, 1.0,
+                                         0.0, 1.0, 1.0, 1.0, 0.0};
 double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0, 
                                         0.0, 0.0, 0.0, 0.0, 0.0,
@@ -115,7 +115,7 @@ void Tocar_piscando() {
         Tocar_nota(nota, duracao); // Toca cada nota
     }
 }
-
+// possível colocar outras funções para buzzer
 
 //imprimir valor binário
 void imprimir_binario(int num) {
@@ -131,7 +131,7 @@ static void gpio_irq_handler(uint gpio, uint32_t events){
     reset_usb_boot(0, 0); //habilita o modo de gravação do microcontrolador
 }
 
-//rotina para definição da intensidade de cores do led
+//Rotina para definição de cores do led
 uint32_t matrix_rgb(double r, double g, double b) {
     unsigned char R, G, B;
     R = r * 255;
@@ -140,30 +140,48 @@ uint32_t matrix_rgb(double r, double g, double b) {
     return (G << 24) | (R << 16) | (B << 8);
 }
 
-//rotina para acionar a matrix de leds - ws2812b
-void desenho_pio(double *desenho, int cor, double r, double g, double b){
+//Rotina para acionar a matriz de LEDs - ws2812b
+//Basta colocar a matriz desenho[25] e escolher uma das cores
+void desenho_pio(double *desenho, int cor){
     uint32_t valor_led;
-    for (int16_t i = 0; i < NUM_PIXELS; i++) {
-        if (cor == 1) { //liga todos os LEDs na cor vermelha
-            valor_led = matrix_rgb(desenho[24-i], g=0.0, b=0.0);
+    if (cor == 1) { //liga todos os LEDs na cor vermelha
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        uint32_t valor_led = matrix_rgb(desenho[24-i], 0.0, 0.0);
+        pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==2) { //liga todos os LEDs na cor amarela
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        valor_led = matrix_rgb(desenho[24-i], desenho[24-i], 0.0);
+        pio_sm_put_blocking(pio, sm, valor_led);
+        } 
+    } else if (cor==3) { //liga todos os LEDs na cor verde
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, desenho[24-i], 0.0);
             pio_sm_put_blocking(pio, sm, valor_led);
-        } else if (cor==2) { //liga todos os LEDs na cor amarela
-            valor_led = matrix_rgb(desenho[24-i], desenho[24-i], g=0.0);
+        }
+    } else if (cor==4) { //liga todos os LEDs na cor ciano
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, desenho[24-i], desenho[24-i]);
             pio_sm_put_blocking(pio, sm, valor_led);
-        } else if (cor==3) { //liga todos os LEDs na cor verde
-            valor_led = matrix_rgb(r=0.0, desenho[24-i], b=0.0);
+        }
+    } else if (cor==5) { //liga todos os LEDs na cor azul
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, 0.0, desenho[24-i]);
             pio_sm_put_blocking(pio, sm, valor_led);
-        } else if (cor==4) { //liga todos os LEDs na cor ciano
-            valor_led = matrix_rgb(r=0.0, desenho[24-i], desenho[24-i]);
+        }
+    } else if (cor==6) { //liga todos os LEDs na cor magenta
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho[24-i], 0.0, desenho[24-i]);
             pio_sm_put_blocking(pio, sm, valor_led);
-        } else if (cor==5) { //liga todos os LEDs na cor azul
-            valor_led = matrix_rgb(r=0.0, g=0.0, desenho[24-i]);
+        }
+    } else if (cor==7) { //liga todos os LEDs na cor branca
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho[24-i], desenho[24-i], desenho[24-i]);
             pio_sm_put_blocking(pio, sm, valor_led);
-        } else if (cor==6) { //liga todos os LEDs na cor magenta
-            valor_led = matrix_rgb(desenho[24-i], g=0.0, desenho[24-i]);
-            pio_sm_put_blocking(pio, sm, valor_led);
-        } else { //liga todos os LEDs na cor branca
-            valor_led = matrix_rgb(r=0.0, g=0.0, b=0.0);
+        }
+    } else { //Desliga todos os LEDs
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, 0.0, 0.0);
             pio_sm_put_blocking(pio, sm, valor_led);
         }
     }
@@ -212,31 +230,31 @@ void menu() {
     printf("# - Desenho a definir\n");
 }
 
-void animação_mariana() {
-    desenho_pio(carinha_feliz_piscando, 6, 1.0, 1.0, 1.0);
+void animação_mariana(int n) {
+    desenho_pio(carinha_feliz_piscando, n);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, 6, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando_1, n);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, 6, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando, n);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, 6, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando_1, n);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, 6, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando, n);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, 6, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando_1, n);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, 6, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando, n);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando                
-    desenho_pio(carinha_feliz_piscando_2, 6, 1.0, 1.0, 1.0);
+    desenho_pio(carinha_feliz_piscando_2, n);
 }
 
 //função principal
 int main() {
-    PIO pio = pio0; 
+    pio = pio0; 
     bool ok;
     uint32_t valor_led;
     double r = 0.0, b = 0.0, g = 1.0;
@@ -300,7 +318,7 @@ int main() {
             break;
             
             case '1':  // Animação da Mariana
-                animação_mariana(); // Adiconada a rotina aqui
+                animação_mariana(6); // Adiconada a rotina aqui
                 printf("Animação do botão 1 foi acionada.\n");
             break;
 
