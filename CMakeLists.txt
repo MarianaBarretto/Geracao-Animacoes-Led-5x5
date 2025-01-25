@@ -42,11 +42,18 @@ pico_set_program_version(animacoes_led "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(animacoes_led 0)
-pico_enable_stdio_usb(animacoes_led 0)
+pico_enable_stdio_usb(animacoes_led 1)
+
+pico_generate_pio_header(animacoes_led ${CMAKE_CURRENT_LIST_DIR}/animacoes_led.pio)
+
+target_sources(animacoes_led PRIVATE animacoes_led.c)
 
 # Add the standard library to the build
-target_link_libraries(animacoes_led
-        pico_stdlib)
+target_link_libraries(animacoes_led PRIVATE
+        pico_stdlib
+        hardware_pio
+	    hardware_adc
+        pico_bootrom)
 
 # Add the standard include files to the build
 target_include_directories(animacoes_led PRIVATE
