@@ -2,3 +2,4 @@
 version = 1
 firmware = 'build/animacoes_led.uf2'
 elf = 'build/animacoes_led.elf'
+gdbServerPort = 3333
