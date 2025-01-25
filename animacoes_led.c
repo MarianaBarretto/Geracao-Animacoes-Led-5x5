@@ -140,7 +140,7 @@ uint32_t matrix_rgb(double b, double r, double g) {
 
 //rotina para acionar a matrix de leds - ws2812b
 void desenho_pio(double *desenho, double r, double g, double b){
-    
+    uint32_t valor_led;
     uint32_t cores[7] = {
         matrix_rgb(0.0, 0.0, 0.0), // Índice 0: LED apagado
         matrix_rgb(1.0, 0.0, 0.0), // Índice 1: Azul
