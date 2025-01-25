@@ -55,21 +55,21 @@ char KEY_MAP[16] = {
 };
 
 //vetor para criar imagem na matriz de led - 1
-double carinha_feliz_piscando[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                       0.0, 3.0, 0.0, 3.0, 0.0, 
-                                       0.0, 0.0, 0.0, 0.0, 0.0,
-                                       3.0, 0.0, 0.0, 0.0, 3.0,
-                                       0.0, 3.0, 3.0, 3.0, 0.0};
-double carinha_feliz_piscando_1[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                         0.0, 0.0, 0.0, 3.0, 0.0, 
-                                         0.0, 0.0, 0.0, 0.0, 0.0,
-                                         3.0, 0.0, 0.0, 0.0, 3.0,
-                                         0.0, 3.0, 3.0, 3.0, 0.0};
-double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
-                                        0.0, 0.0, 0.0, 0.0, 0.0, 
-                                        0.0, 0.0, 0.0, 0.0, 0.0,
-                                        0.0, 0.0, 0.0, 0.0, 0.0,
-                                        0.0, 0.0, 0.0, 0.0, 0.0};                                                                                                                                  
+double carinha_feliz_piscando[25] =   {0, 0, 0, 0, 0,
+                                       0, 3, 0, 3, 0, 
+                                       0, 0, 0, 0, 0,
+                                       3, 0, 0, 0, 3,
+                                       0, 3, 3, 3, 0};
+double carinha_feliz_piscando_1[25] = {0, 0, 0, 0, 0,
+                                       0, 0, 0, 3, 0, 
+                                       0, 0, 0, 0, 0,
+                                       3, 0, 0, 0, 3,
+                                       0, 3, 3, 3, 0};
+double carinha_feliz_piscando_2[25] = {0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0};                                                                                                                                  
                    
 // ADICIONE SUAS IMAGENS
 
@@ -144,23 +144,21 @@ uint32_t matrix_rgb(double b, double r, double g) {
 }
 
 //rotina para acionar a matrix de leds - ws2812b
-void desenho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b){
+void desenho_pio(double *desenho, double r, double g, double b){
+    
+    uint32_t cores[7] = {
+        matrix_rgb(0.0, 0.0, 0.0), // Índice 0: LED apagado
+        matrix_rgb(1.0, 0.0, 0.0), // Índice 1: Azul
+        matrix_rgb(0.0, 1.0, 0.0), // Índice 2: Vermelho
+        matrix_rgb(0.0, 0.0, 1.0), // Índice 3: Verde
+        matrix_rgb(0.0, 1.0, 1.0), // Índice 4: Amarelo
+        matrix_rgb(1.0, 0.0, 1.0), // Índice 5: Ciano
+        matrix_rgb(1.0, 1.0, 0.0)  // Índice 6: Magenta
+    };
+
     for (int16_t i = 0; i < NUM_PIXELS; i++) {
-        if (desenho[24 - i] == 1) { 
-            valor_led = matrix_rgb(b = 1.0, r = 0.0, g = 0.0); // Led Azul
-        } else if (desenho[24 - i] == 2) { 
-            valor_led = matrix_rgb(b = 0.0, r = 1.0, g = 0.0); // Led Vermelho
-        } else if (desenho[24 - i] == 3) { 
-            valor_led = matrix_rgb(b = 0.0, r = 0.0, g = 1.0); // Led Verde 
-        } else if (desenho[24 - i] == 4) { 
-            valor_led = matrix_rgb(b = 0.0, r = 1.0, g = 1.0); // Led Amarelo
-        } else if (desenho[24 - i] == 5) { 
-            valor_led = matrix_rgb(b = 1.0, r = 0.0, g = 1.0); // Led Ciano
-        } else if (desenho[24 - i] == 6) { 
-            valor_led = matrix_rgb(b = 1.0, r = 1.0, g = 0.0); // Led Magenta                      
-        } else {
-            valor_led = matrix_rgb(0.0, 0.0, 0.0);  // Led Apagado          
-        }
+        // Defina a cor com base no valor de desenho[24 - i]
+        uint32_t valor_led = cores [(int)desenho[24 - i]];
         pio_sm_put_blocking(pio, sm, valor_led);
     }
     imprimir_binario(valor_led);
@@ -209,25 +207,25 @@ void menu() {
 }
 
 void animação_mariana() {
-    desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+    desenho_pio(carinha_feliz_piscando, 1.0, 1.0, 1.0);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
+    desenho_pio(carinha_feliz_piscando_1, 1.0, 1.0, 1.0);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+    desenho_pio(carinha_feliz_piscando, 1.0, 1.0, 1.0);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
+    desenho_pio(carinha_feliz_piscando_1, 1.0, 1.0, 1.0);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+    desenho_pio(carinha_feliz_piscando, 1.0, 1.0, 1.0);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
+    desenho_pio(carinha_feliz_piscando_1, 1.0, 1.0, 1.0);
     sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
+    desenho_pio(carinha_feliz_piscando, 1.0, 1.0, 1.0);
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando                
-    desenho_pio(carinha_feliz_piscando_2, valor_led, pio, sm, r, g, b);
+    desenho_pio(carinha_feliz_piscando_2, 1.0, 1.0, 1.0);
 }
 
 //função principal
