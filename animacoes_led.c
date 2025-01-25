@@ -195,7 +195,7 @@ void menu() {
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Carinha Feliz Piscando\n");
     printf("A - Desenho a definir\n");
-    printf("B - Animação PONG\n"); // O jogo Pong foi lançado em 1972 criado por Nolan Bushnell e Ted Dabney, fundadores da Atari
+    printf("B - Desenho a definir\n"); 
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
     printf("D - Desenho a definir\n");
     printf("* - Desenho a definir\n");
@@ -205,7 +205,7 @@ void menu() {
 void animacaoPONG_RGB(){ // 5 pra linhas e colunas totalizando a matriz de 25 led 3 pra RGB
 
      while (true) {
-    int matriz [5][5][3] = { // 5 linhas e 5 colunas totalizando 25 leds 3 cores RGB 
+    int matriz [5][5][3] = { //  {0, 0, 255} correspondente as cores utilizadas no projeto
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
@@ -389,7 +389,7 @@ int main() {
     menu();
 
     while (true) {
-        char tecla = scan_keypad();
+        
         char key = scan_keypad();
         if (key != '\0') {
             printf("\n>> Você pressionou a tecla: %c <<\n", key);
@@ -421,9 +421,7 @@ int main() {
                 Tocar_melodia(); // Toca a melodia             
             } // ADICIONE SUAS TECLAS
             
-            else if (tecla == 'B') { // Verifica se a tecla "B" foi pressionada.
-            animacaoPONG_RGB(); // Chama a função de animação RGB.
-        }
+            
         }
 
         sleep_ms(100);
