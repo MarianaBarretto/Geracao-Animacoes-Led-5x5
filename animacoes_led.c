@@ -54,6 +54,16 @@ void desenho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm) {
     }
 }
 
+//função para exibir os desenhos
+void exibir_animacao(double *desenho[], PIO pio, uint sm){
+    for (int i = 0; i < 4; i++){ //exibe os 4 primeiros desenhos
+        desenho_pio(desenho[i], 0, pio, sm);
+        sleep_ms(500); //tempo de um desenho para o outro
+    }
+    //exibe o ultimo desenho e o mantêm visivel para que a tecla A o desligue  
+    desenho_pio(desenho[4], 0, pio, sm);
+}
+
 // função para desligar todos os LEDs
 void desligar_LEDs(double *desenho){
     for (int i = 0; i < NUM_PIXELS; i++){
@@ -62,9 +72,10 @@ void desligar_LEDs(double *desenho){
 }
 
 //ligar LEDs brancas com 20% de intensidade
-void ligar_LEDs_brancos(double *desenho){
-    for (int i = 0; i < NUM_PIXELS; i++){
-        desenho[i] = 0.2; //cor branca com 20% de intensidade
+void ligar_leds_brancos(double *desenho, PIO pio, uint sm) {
+    for (int i = 0; i < NUM_PIXELS; i++) {
+        uint32_t valor_led = matriz_RGB(0.2, 0.2, 0.2); //branco com 20% de intensidade
+        pio_sm_put_blocking(pio, sm, valor_led);
     }
 }
 
@@ -148,7 +159,45 @@ double desenho5[25] =  {0.5, 0.7, 0.5, 0.7, 0.5,
                         0.0, 0.7, 0.5, 0.7, 0.0,
                         0.5, 0.5, 0.7, 0.5, 0.5,};
 
+void menu(){
+    printf("\nMenu de Opções:\n");
+    printf("1 - Reproduzir Animações\n");
+    printf("# - Ligar LEDs na Cor Branca com 20% de Intensidade\n");
+    printf("A - Desligar LEDs\n");
+}
+
+//função principal
 int main(){
+    PIO pio = pio0;
+    bool ok;
+    uint16_t i;
+    uint32_t valor_led;
+    double r = 0.0, b = 0.0, g = 0.0;
+
+    //frequência de clock para 128 MHz
+    ok = set_sys_clock_khz(128000, false);
+    //inicializa todos os codigos stdio padrao ligados ao binario
+    stdio_init_all();
+
+    printf("iniciando a transmissão PIO");
+    if (ok) printf("clock set to %ld\n", clock_get_hz(clk_sys));
+
+    uint offset = pio_add_program(pio, &pio_matrix_program);
+    uint sm = pio_claim_unused_sm(pio, true);
+    pio_matrix_program_init(pio, sm, offset, OUT_PIN);
+
+    //configura teclado
+    configurar_teclado();
+
+    //vetores com desenhos
+    double *desenhos[5] = {desenho, desenho2, desenho3, desenho4, desenho5};
+
+    //loop principal
+    while (1){
+       
+    }
+    
+
 
 }
 
