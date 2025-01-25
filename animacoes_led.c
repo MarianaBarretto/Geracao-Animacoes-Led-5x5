@@ -20,13 +20,8 @@
 #define BUZZER 21 // Buzzer na GPIO 21
 
 //Variáveis Globais
-
-uint32_t valor_led;
 PIO pio;
 uint sm;
-double r;
-double g;
-double b;
 
 // Frequências das notas (em Hz)
 #define DO 261
