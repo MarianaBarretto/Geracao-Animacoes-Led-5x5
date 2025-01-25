@@ -41,6 +41,7 @@
         "*.ndjson": "jsonl",
         "*.dbclient-js": "javascript",
         "bootrom.h": "c",
-        "pio_matrix.pio.h": "c"
+        "pio_matrix.pio.h": "c",
+        "random": "c"
     }
 }
