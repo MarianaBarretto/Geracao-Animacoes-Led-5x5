@@ -195,17 +195,17 @@ void menu() {
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Carinha Feliz Piscando\n");
     printf("A - Desenho a definir\n");
-    printf("B - Animação PONG\n"); // O jogo Pong foi lançado em 1972. Ele foi criado por Nolan Bushnell e Ted Dabney, fundadores da Atari
+    printf("B - Animação PONG\n"); // O jogo Pong foi lançado em 1972 criado por Nolan Bushnell e Ted Dabney, fundadores da Atari
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
     printf("D - Desenho a definir\n");
     printf("* - Desenho a definir\n");
     printf("# - Desenho a definir\n");
 }
 
-void animacaoPONG_RGB(){
+void animacaoPONG_RGB(){ // 5 pra linhas e colunas totalizando a matriz de 25 led 3 pra RGB
 
-     while (true) {  // matriz cria um animação consiste de duas bases e uma bola  
-    int matriz [5][5][3] = {
+     while (true) {
+    int matriz [5][5][3] = { // 5 linhas e 5 colunas totalizando 25 leds 3 cores RGB 
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
@@ -213,7 +213,7 @@ void animacaoPONG_RGB(){
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
 };
 
-    for(int linha = 0; linha < 5; linha++){
+    for(int linha = 0; linha < 5; linha++){ // for pra percorrer as linhas da matriz
     for(int coluna = 0; coluna < 5; coluna++){
       int posicao = getIndex(linha, coluna);
       npSetLED(posicao, matriz[coluna][linha][0], matriz[coluna][linha][1], matriz[coluna][linha][2]);
@@ -244,7 +244,7 @@ void animacaoPONG_RGB(){
   }
 }
 
-int matriz3 [5][5][3] = { // 5 pra linhas e colunas totalizando a matriz de 25 led 3 pra RGB
+int matriz3 [5][5][3] = {
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
@@ -252,16 +252,16 @@ int matriz3 [5][5][3] = { // 5 pra linhas e colunas totalizando a matriz de 25 l
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
 };
    
-    for(int linha = 0; linha < 5; linha++){  
-    for(int coluna = 0; coluna < 5; coluna++){ // matriz pra percorrer as linhas da
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
       int posicao = getIndex(linha, coluna);
       npSetLED(posicao, matriz3[coluna][linha][0], matriz3[coluna][linha][1], matriz3[coluna][linha][2]);
     }
   }
 
-      npWrite(); //informação pro led
-      sleep_ms(1500);// milisengundos ou seja, 1,5 segundos 
-      npClear(); // limpa a ação
+      npWrite();
+      sleep_ms(1500);
+      npClear();
 
   int matriz4 [5][5][3] = {
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
@@ -282,6 +282,81 @@ int matriz3 [5][5][3] = { // 5 pra linhas e colunas totalizando a matriz de 25 l
       npWrite();
       sleep_ms(1500);
       npClear();
+
+  int matriz5 [5][5][3] = {
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
+};
+   
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
+      int posicao = getIndex(linha, coluna);
+      npSetLED(posicao, matriz5[coluna][linha][0], matriz5[coluna][linha][1], matriz5[coluna][linha][2]);
+    }
+  }
+
+      npWrite();
+      sleep_ms(1500);
+      npClear();
+
+      int matriz6 [5][5][3] = {
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
+};
+   
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
+      int posicao = getIndex(linha, coluna);
+      npSetLED(posicao, matriz6[coluna][linha][0], matriz6[coluna][linha][1], matriz6[coluna][linha][2]);
+    }
+  }
+
+      npWrite();
+      sleep_ms(1500);
+      npClear();
+
+      int matriz7 [5][5][3] = {
+    {{0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
+};
+   
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
+      int posicao = getIndex(linha, coluna);
+      npSetLED(posicao, matriz7[coluna][linha][0], matriz7[coluna][linha][1], matriz7[coluna][linha][2]);
+    }
+  }
+
+      npWrite();
+      sleep_ms(1500);
+      npClear();
+
+      int matriz8 [5][5][3] = {
+    {{0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
+};
+   
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
+      int posicao = getIndex(linha, coluna);
+      npSetLED(posicao, matriz8[coluna][linha][0], matriz8[coluna][linha][1], matriz8[coluna][linha][2]);
+    }
+  }
+
+      npWrite();
+      sleep_ms(1500);
 
 //função principal
 int main() {
