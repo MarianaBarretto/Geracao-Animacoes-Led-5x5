@@ -202,12 +202,94 @@ void menu() {
     printf("# - Desenho a definir\n");
 }
 
+void animacaoPONG_RGB(){
+
+     while (true) {
+    int matriz [5][5][3] = {
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
+};
+
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
+      int posicao = getIndex(linha, coluna);
+      npSetLED(posicao, matriz[coluna][linha][0], matriz[coluna][linha][1], matriz[coluna][linha][2]);
+    }
+  }
+    npWrite(); 
+    sleep_ms(1500);
+    npClear();
+
+    int matriz2 [5][5][3] = {
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
+};
+   
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
+      int posicao = getIndex(linha, coluna);
+      npSetLED(posicao, matriz2[coluna][linha][0], matriz2[coluna][linha][1], matriz2[coluna][linha][2]);
+    }
+  }
+       
+    npWrite();
+    sleep_ms(1500);
+    npClear();
+  }
+}
+
+int matriz3 [5][5][3] = {
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
+};
+   
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
+      int posicao = getIndex(linha, coluna);
+      npSetLED(posicao, matriz3[coluna][linha][0], matriz3[coluna][linha][1], matriz3[coluna][linha][2]);
+    }
+  }
+
+      npWrite();
+      sleep_ms(1500);
+      npClear();
+
+  int matriz4 [5][5][3] = {
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
+};
+    
+   
+    for(int linha = 0; linha < 5; linha++){
+    for(int coluna = 0; coluna < 5; coluna++){
+      int posicao = getIndex(linha, coluna);
+      npSetLED(posicao, matriz4[coluna][linha][0], matriz4[coluna][linha][1], matriz4[coluna][linha][2]);
+    }
+  }
+
+      npWrite();
+      sleep_ms(1500);
+      npClear();
+
 //função principal
 int main() {
     PIO pio = pio0; 
     bool ok;
     uint32_t valor_led;
     double r = 0.0, b = 0.0, g = 1.0;
+    
     
    // Configura clock
     ok = set_sys_clock_khz(128000, false);
@@ -232,6 +314,7 @@ int main() {
     menu();
 
     while (true) {
+        char tecla = scan_keypad();
         char key = scan_keypad();
         if (key != '\0') {
             printf("\n>> Você pressionou a tecla: %c <<\n", key);
@@ -262,6 +345,10 @@ int main() {
             } else if (key == '2') {            
                 Tocar_melodia(); // Toca a melodia             
             } // ADICIONE SUAS TECLAS
+            
+            else if (tecla == 'B') { // Verifica se a tecla "B" foi pressionada.
+            animacaoPONG_RGB(); // Chama a função de animação RGB.
+        }
         }
 
         sleep_ms(100);
