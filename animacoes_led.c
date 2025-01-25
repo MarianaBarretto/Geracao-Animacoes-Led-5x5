@@ -29,7 +29,7 @@ void imprimir_binario(int num){
     }
 }                       
 
-void desenho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm) {
+void   enho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm) {
     for (int16_t i = 0; i < NUM_PIXELS; i++) {
         //aplicando cores com base no valor do desenho[i]
         if (desenho[i] == 1.0) {
@@ -56,6 +56,7 @@ void desenho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm) {
 
 //função para exibir os desenhos
 void exibir_animacao(double *desenho[], PIO pio, uint sm){
+    printf("Exibindo Animações...");
     for (int i = 0; i < 4; i++){ //exibe os 4 primeiros desenhos
         desenho_pio(desenho[i], 0, pio, sm);
         sleep_ms(500); //tempo de um desenho para o outro
@@ -66,13 +67,16 @@ void exibir_animacao(double *desenho[], PIO pio, uint sm){
 
 // função para desligar todos os LEDs
 void desligar_LEDs(double *desenho){
+     printf("Desligando LEds...");
     for (int i = 0; i < NUM_PIXELS; i++){
         desenho[i] = 0.0; //irá definir todos os LEDs como desligados
     }
+    
 }
 
 //ligar LEDs brancas com 20% de intensidade
 void ligar_leds_brancos(double *desenho, PIO pio, uint sm) {
+    printf("Exibindo LEDs Brancos...");
     for (int i = 0; i < NUM_PIXELS; i++) {
         uint32_t valor_led = matriz_RGB(0.2, 0.2, 0.2); //branco com 20% de intensidade
         pio_sm_put_blocking(pio, sm, valor_led);
@@ -194,7 +198,18 @@ int main(){
 
     //loop principal
     while (1){
-       
+       char tecla = leitura_teclas(); //para ler as teclas pressionadas
+
+       if(tecla == '1'){
+            printf("Tecla 1 Pressionada...");
+            exibir_animacao(desenhos,pio, sm);
+        }else if(tecla = '#'){
+            printf("Tecla # Pressionada...");
+            ligar_leds_brancos(desenho, pio, sm); //liga LEDs brancas 20%
+        } else if(tecla = 'A'){
+            printf("Tecla A Pressionada...");
+            desligar_LEDs(desenho);
+        }
     }
     
 
