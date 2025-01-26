@@ -68,8 +68,6 @@ double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0};                                                                                                                                  
                    
-// ADICIONE SUAS IMAGENS
-
 double coracao1[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
                        1.0, 0.0, 1.0, 0.0, 1.0, 
                        1.0, 0.0, 0.0, 0.0, 1.0,
@@ -92,13 +90,23 @@ double coracao4[25] =  {1.0, 1.0, 0.0, 1.0, 1.0,
                         1.0, 0.0, 1.0, 0.0, 1.0, 
                         0.0, 1.0, 0.0, 1.0, 0.0,
                         0.0, 0.0, 1.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.8, 0.8,};
+                        0.0, 0.0, 0.0, 0.8, 0.8};
 
 double coracao5[25] =  {0.5, 0.7, 0.5, 0.7, 0.5,
                         0.7, 0.0, 0.7, 0.0, 0.7, 
                         0.7, 0.0, 0.5, 0.0, 0.7,
                         0.0, 0.7, 0.5, 0.7, 0.0,
-                        0.5, 0.5, 0.7, 0.5, 0.5,};                      
+                        0.5, 0.5, 0.7, 0.5, 0.5};  
+
+// ADICIONE SUAS IMAGENS  
+
+// ADIÇÃO DE DESENHO PARA AS LEDs BRANCAS COM 20% DE INTENSIDADE
+double luzes_brancas[25] = {0.2, 0.2, 0.2, 0.2, 0.2,
+                            0.2, 0.2, 0.2, 0.2, 0.2, 
+                            0.2, 0.2, 0.2, 0.2, 0.2,
+                            0.2, 0.2, 0.2, 0.2, 0.2,
+                            0.2, 0.2, 0.2, 0.2, 0.2};
+
 
 
 // Função para tocar uma nota específica
@@ -261,6 +269,12 @@ void menu() {
     printf("# - Desenho a definir\n");
 }
 
+// Função para ligar LEDs brancas com 20% de intensidade
+void leds_brancas(int n){
+    desenho_pio(luzes_brancas, n);
+}
+
+
 void animação_mariana(int n) {
     desenho_pio(carinha_feliz_piscando, n);
     sleep_ms(400);
@@ -351,7 +365,7 @@ int main() {
             break;
 
             case '#':  // Liga todos os LEDs como branco com intensidade 20%
-                // Adiconar rotina aqui.
+                leds_brancas(7);
                 printf("LEDs brancos ligados com intensidade de 20%%.\n");   
             break;
             
@@ -366,7 +380,7 @@ int main() {
             break;
 
             case '2':  // Animação da Helen
-                animacao_helen(4); 
+                animacao_helen(1); 
                 printf("Animação do botão 2 foi acionada.\n");
             break;
 
