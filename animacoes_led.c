@@ -450,7 +450,7 @@ int main() {
             break;
 
             case '3':  // Animação do Kauan
-                animacao_kauan(5, 100);
+                animacao_kauan(2, 40);
                 printf("Animação do botão 3 foi acionada.\n");
             break;
 
