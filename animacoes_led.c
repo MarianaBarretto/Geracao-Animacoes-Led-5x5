@@ -374,7 +374,6 @@ void animacao_helen(){
     sleep_ms(500);              
     desenho_pio(coracao5, 5);  
 }
-
 // Função para converter a posição do matriz para uma posição do vetor.
 int getIndex(int x, int y) {
     // Se a linha for par (0, 2, 4), percorremos da esquerda para a direita.
@@ -384,11 +383,11 @@ int getIndex(int x, int y) {
     } else {
         return 24-(y * 5 + (4 - x)); // Linha ímpar (direita para esquerda).
     }
-
-void animacaoPONG_ISRAELFALCAO(){ //Função que cria animação do jogo PONG da ATARI lançado em 1972
+}
+void animacaoPONG_ISRAELFALCAO(){
 
      while (true) {
-    int matriz [5][5][3] = {  // matris que define os leds e as cores 
+    int matriz [5][5][3] = {
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
@@ -396,14 +395,14 @@ void animacaoPONG_ISRAELFALCAO(){ //Função que cria animação do jogo PONG da
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
 };
 
-    for(int linha = 0; linha < 5; linha++){ // matriz pra percorrer linhas e colunas 
+    for(int linha = 0; linha < 5; linha++){
     for(int coluna = 0; coluna < 5; coluna++){
       int posicao = getIndex(linha, coluna);
       npSetLED(posicao, matriz[coluna][linha][0], matriz[coluna][linha][1], matriz[coluna][linha][2]);
     }
   }
     npWrite(); 
-    sleep_ms(1500);
+    sleep_ms(1000);
     npClear();
 
     int matriz2 [5][5][3] = {
@@ -443,7 +442,7 @@ int matriz3 [5][5][3] = {
   }
 
       npWrite();
-      sleep_ms(1500);
+      sleep_ms(1000);
       npClear();
 
   int matriz4 [5][5][3] = {
@@ -463,7 +462,7 @@ int matriz3 [5][5][3] = {
   }
 
       npWrite();
-      sleep_ms(1500);
+      sleep_ms(1000);
       npClear();
 
   int matriz5 [5][5][3] = {
@@ -482,7 +481,7 @@ int matriz3 [5][5][3] = {
   }
 
       npWrite();
-      sleep_ms(1500);
+      sleep_ms(1000);
       npClear();
 
       int matriz6 [5][5][3] = {
@@ -501,7 +500,7 @@ int matriz3 [5][5][3] = {
   }
 
       npWrite();
-      sleep_ms(1500);
+      sleep_ms(1000);
       npClear();
 
       int matriz7 [5][5][3] = {
@@ -520,7 +519,7 @@ int matriz3 [5][5][3] = {
   }
 
       npWrite();
-      sleep_ms(1500);
+      sleep_ms(1000);
       npClear();
 
       int matriz8 [5][5][3] = {
@@ -539,8 +538,7 @@ int matriz3 [5][5][3] = {
   }
 
       npWrite();
-      sleep_ms(1500);
-
+      sleep_ms(1000);
 
 //função principal
 int main() {
@@ -618,7 +616,7 @@ int main() {
             break;
 
             case '3':  // Animação do Kauan
-                animacao_kauan(5, 100);
+                animacao_kauan(2, 40);
                 printf("Animação do botão 3 foi acionada.\n");
             break;
 
