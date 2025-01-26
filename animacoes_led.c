@@ -230,6 +230,63 @@ void desenho_pio(double *desenho, int cor){
     imprimir_binario(valor_led);
 }
 
+//Animação de Kauan
+const double ondas_coloridas[25][3] = { // Matriz de cores para a animação "Ondas Coloridas"
+    {1.0, 0.0, 0.0}, {0.8, 0.2, 0.0}, {0.6, 0.4, 0.0}, {0.4, 0.6, 0.0}, {0.2, 0.8, 0.0},
+    {0.0, 1.0, 0.0}, {0.0, 0.8, 0.2}, {0.0, 0.6, 0.4}, {0.0, 0.4, 0.6}, {0.0, 0.2, 0.8},
+    {0.0, 0.0, 1.0}, {0.2, 0.0, 0.8}, {0.4, 0.0, 0.6}, {0.6, 0.0, 0.4}, {0.8, 0.0, 0.2},
+    {1.0, 0.0, 0.0}, {0.8, 0.2, 0.0}, {0.6, 0.4, 0.0}, {0.4, 0.6, 0.0}, {0.2, 0.8, 0.0},
+    {0.0, 1.0, 0.0}, {0.0, 0.8, 0.2}, {0.0, 0.6, 0.4}, {0.0, 0.4, 0.6}, {0.0, 0.2, 0.8},
+};
+
+void animacao_kauan(uint16_t ciclos, uint16_t delay_ms) { // Função para exibir uma animação de ondas coloridas nos LEDs
+    uint16_t num_cores = sizeof(ondas_coloridas) / sizeof(ondas_coloridas[0]);
+
+    for (uint16_t ciclo = 0; ciclo < ciclos; ciclo++) {
+        for (uint16_t frame = 0; frame < num_cores; frame++) {
+            // Configura cada LED com base no deslocamento atual
+            for (uint16_t i = 0; i < NUM_PIXELS; i++) {
+                uint32_t valor_led = matrix_rgb(
+                    ondas_coloridas[(frame + i) % num_cores][0],
+                    ondas_coloridas[(frame + i) % num_cores][1],
+                    ondas_coloridas[(frame + i) % num_cores][2]
+                );
+                pio_sm_put_blocking(pio, sm, valor_led);
+            }
+            // Pausa para criar o efeito de animação
+            sleep_ms(delay_ms);
+        }
+    }
+
+    printf("Animação 'Ondas Coloridas' finalizada após %d ciclos.\n", ciclos);
+}
+
+// Implementação da opção 'B'
+void leds_azuis_100() {
+    uint32_t buffer[NUM_PIXELS];// Cria um buffer
+    uint32_t valor_led = matrix_rgb(0.0, 0.0, 1.0); // Preenche o buffer com a cor azul (100%)
+    for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        buffer[i] = valor_led;
+    }
+    for (int16_t i = 0; i < NUM_PIXELS; i++) { // Envia os dados para todos os LEDs ao mesmo tempo
+        pio_sm_put_blocking(pio, sm, buffer[i]);
+    }
+    printf("Todos os LEDs foram configurados para azul com intensidade de 100%%.\n");
+}
+
+// Implementação da opção 'C'
+void leds_vermelhos_80() {
+    uint32_t buffer[NUM_PIXELS]; // Cria um buffer
+    uint32_t valor_led = matrix_rgb(0.8, 0.0, 0.0); // Preenche o buffer com a cor vermelha (80%)
+    for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        buffer[i] = valor_led;
+    }
+    for (int16_t i = 0; i < NUM_PIXELS; i++) { // Envia os dados para todos os LEDs ao mesmo tempo
+        pio_sm_put_blocking(pio, sm, buffer[i]);
+    }
+    printf("Todos os LEDs foram configurados para vermelho com intensidade de 80%%.\n");
+}
+
 // Verifica se uma tecla foi pressionada no teclado matricial
 char scan_keypad() {
     for (int row = 0; row < ROWS; row++) {
@@ -266,7 +323,6 @@ void menu() {
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Carinha Feliz Piscando\n");
     printf("2 - Coracão Piscando\n");
-    printf("8 - Pong ATARI 1972\n");
     printf("A - Desenho a definir\n");
     printf("B - Desenho a definir\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
@@ -318,172 +374,6 @@ void animacao_helen(){
     desenho_pio(coracao5, 5);  
 }
 
-// Função para converter a posição do matriz para uma posição do vetor.
-int getIndex(int x, int y) {
-    // Se a linha for par (0, 2, 4), percorremos da esquerda para a direita.
-    // Se a linha for ímpar (1, 3), percorremos da direita para a esquerda.
-    if (y % 2 == 0) {
-        return 24-(y * 5 + x); // Linha par (esquerda para direita).
-    } else {
-        return 24-(y * 5 + (4 - x)); // Linha ímpar (direita para esquerda).
-    }
-
-void animacaoPONG_ISRAELFALCAO(){
-
-     while (true) {
-    int matriz [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz[coluna][linha][0], matriz[coluna][linha][1], matriz[coluna][linha][2]);
-    }
-  }
-    npWrite(); 
-    sleep_ms(1500);
-    npClear();
-
-    int matriz2 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz2[coluna][linha][0], matriz2[coluna][linha][1], matriz2[coluna][linha][2]);
-    }
-  }
-       
-    npWrite();
-    sleep_ms(1500);
-    npClear();
-  }
-}
-
-int matriz3 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz3[coluna][linha][0], matriz3[coluna][linha][1], matriz3[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1500);
-      npClear();
-
-  int matriz4 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-    
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz4[coluna][linha][0], matriz4[coluna][linha][1], matriz4[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1500);
-      npClear();
-
-  int matriz5 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz5[coluna][linha][0], matriz5[coluna][linha][1], matriz5[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1500);
-      npClear();
-
-      int matriz6 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz6[coluna][linha][0], matriz6[coluna][linha][1], matriz6[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1500);
-      npClear();
-
-      int matriz7 [5][5][3] = {
-    {{0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz7[coluna][linha][0], matriz7[coluna][linha][1], matriz7[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1500);
-      npClear();
-
-      int matriz8 [5][5][3] = {
-    {{0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz8[coluna][linha][0], matriz8[coluna][linha][1], matriz8[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1500);
-   
 //função principal
 int main() {
     pio = pio0; 
@@ -525,12 +415,12 @@ int main() {
             break;
 
             case 'B':  // Liga todos os LEDs como azul com intensidade 100%
-                // Adiconar rotina aqui.
+                leds_azuis_100();
                 printf("LEDs azuis ligados com intensidade de 100%%.\n");   
             break;
 
             case 'C':  // Liga todos os LEDs como vermelho com intensidade 80%
-                // Adiconar rotina aqui.
+                leds_vermelhos_80();
                 printf("LEDs vermelhos ligados com intensidade de 80%%.\n");   
             break;
 
@@ -560,7 +450,7 @@ int main() {
             break;
 
             case '3':  // Animação do Kauan
-                // Adiconar rotina aqui.
+                animacao_kauan(5, 100);
                 printf("Animação do botão 3 foi acionada.\n");
             break;
 
@@ -585,7 +475,7 @@ int main() {
             break;
 
             case '8':  // Animação do Israel
-               animacaoPONG_ISRAELFALCAO();
+                // Adiconar rotina aqui.
                 printf("Animação do botão 8 foi acionada.\n");
             break;
 
