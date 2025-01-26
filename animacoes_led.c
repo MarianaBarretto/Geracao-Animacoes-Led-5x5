@@ -230,6 +230,63 @@ void desenho_pio(double *desenho, int cor){
     imprimir_binario(valor_led);
 }
 
+//Animação de Kauan
+const double ondas_coloridas[25][3] = { // Matriz de cores para a animação "Ondas Coloridas"
+    {1.0, 0.0, 0.0}, {0.8, 0.2, 0.0}, {0.6, 0.4, 0.0}, {0.4, 0.6, 0.0}, {0.2, 0.8, 0.0},
+    {0.0, 1.0, 0.0}, {0.0, 0.8, 0.2}, {0.0, 0.6, 0.4}, {0.0, 0.4, 0.6}, {0.0, 0.2, 0.8},
+    {0.0, 0.0, 1.0}, {0.2, 0.0, 0.8}, {0.4, 0.0, 0.6}, {0.6, 0.0, 0.4}, {0.8, 0.0, 0.2},
+    {1.0, 0.0, 0.0}, {0.8, 0.2, 0.0}, {0.6, 0.4, 0.0}, {0.4, 0.6, 0.0}, {0.2, 0.8, 0.0},
+    {0.0, 1.0, 0.0}, {0.0, 0.8, 0.2}, {0.0, 0.6, 0.4}, {0.0, 0.4, 0.6}, {0.0, 0.2, 0.8},
+};
+
+void animacao_kauan(uint16_t ciclos, uint16_t delay_ms) { // Função para exibir uma animação de ondas coloridas nos LEDs
+    uint16_t num_cores = sizeof(ondas_coloridas) / sizeof(ondas_coloridas[0]);
+
+    for (uint16_t ciclo = 0; ciclo < ciclos; ciclo++) {
+        for (uint16_t frame = 0; frame < num_cores; frame++) {
+            // Configura cada LED com base no deslocamento atual
+            for (uint16_t i = 0; i < NUM_PIXELS; i++) {
+                uint32_t valor_led = matrix_rgb(
+                    ondas_coloridas[(frame + i) % num_cores][0],
+                    ondas_coloridas[(frame + i) % num_cores][1],
+                    ondas_coloridas[(frame + i) % num_cores][2]
+                );
+                pio_sm_put_blocking(pio, sm, valor_led);
+            }
+            // Pausa para criar o efeito de animação
+            sleep_ms(delay_ms);
+        }
+    }
+
+    printf("Animação 'Ondas Coloridas' finalizada após %d ciclos.\n", ciclos);
+}
+
+// Implementação da opção 'B'
+void leds_azuis_100() {
+    uint32_t buffer[NUM_PIXELS];// Cria um buffer
+    uint32_t valor_led = matrix_rgb(0.0, 0.0, 1.0); // Preenche o buffer com a cor azul (100%)
+    for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        buffer[i] = valor_led;
+    }
+    for (int16_t i = 0; i < NUM_PIXELS; i++) { // Envia os dados para todos os LEDs ao mesmo tempo
+        pio_sm_put_blocking(pio, sm, buffer[i]);
+    }
+    printf("Todos os LEDs foram configurados para azul com intensidade de 100%%.\n");
+}
+
+// Implementação da opção 'C'
+void leds_vermelhos_80() {
+    uint32_t buffer[NUM_PIXELS]; // Cria um buffer
+    uint32_t valor_led = matrix_rgb(0.8, 0.0, 0.0); // Preenche o buffer com a cor vermelha (80%)
+    for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        buffer[i] = valor_led;
+    }
+    for (int16_t i = 0; i < NUM_PIXELS; i++) { // Envia os dados para todos os LEDs ao mesmo tempo
+        pio_sm_put_blocking(pio, sm, buffer[i]);
+    }
+    printf("Todos os LEDs foram configurados para vermelho com intensidade de 80%%.\n");
+}
+
 // Verifica se uma tecla foi pressionada no teclado matricial
 char scan_keypad() {
     for (int row = 0; row < ROWS; row++) {
@@ -358,12 +415,12 @@ int main() {
             break;
 
             case 'B':  // Liga todos os LEDs como azul com intensidade 100%
-                // Adiconar rotina aqui.
+                leds_azuis_100();
                 printf("LEDs azuis ligados com intensidade de 100%%.\n");   
             break;
 
             case 'C':  // Liga todos os LEDs como vermelho com intensidade 80%
-                // Adiconar rotina aqui.
+                leds_vermelhos_80();
                 printf("LEDs vermelhos ligados com intensidade de 80%%.\n");   
             break;
 
@@ -393,7 +450,7 @@ int main() {
             break;
 
             case '3':  // Animação do Kauan
-                // Adiconar rotina aqui.
+                animacao_kauan(5, 100);
                 printf("Animação do botão 3 foi acionada.\n");
             break;
 
