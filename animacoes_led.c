@@ -19,6 +19,10 @@
 // GPIO do buzzer
 #define BUZZER 21 // Buzzer na GPIO 21
 
+//Variáveis Globais
+PIO pio;
+uint sm;
+
 // Frequências das notas (em Hz)
 #define DO 261
 #define RE 293
@@ -45,29 +49,70 @@ char KEY_MAP[16] = {
     '*', '0', '#', 'D'
 };
 
-//vetor para criar imagem na matriz de led - 1
+//Vetores de imagens - Valores devem variar de 0 a 1 (de acordo com a porcentagem de intensidade)
+
+//Animação 1
 double carinha_feliz_piscando[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                       0.0, 3.0, 0.0, 3.0, 0.0, 
+                                       0.0, 1.0, 0.0, 1.0, 0.0, 
                                        0.0, 0.0, 0.0, 0.0, 0.0,
-                                       3.0, 0.0, 0.0, 0.0, 3.0,
-                                       0.0, 3.0, 3.0, 3.0, 0.0};
-
+                                       1.0, 0.0, 0.0, 0.0, 1.0,
+                                       0.0, 1.0, 1.0, 1.0, 0.0};
 double carinha_feliz_piscando_1[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                         0.0, 0.0, 0.0, 3.0, 0.0, 
+                                         0.0, 0.0, 0.0, 1.0, 0.0, 
                                          0.0, 0.0, 0.0, 0.0, 0.0,
-                                         3.0, 0.0, 0.0, 0.0, 3.0,
-                                         0.0, 3.0, 3.0, 3.0, 0.0};
-
+                                         1.0, 0.0, 0.0, 0.0, 1.0,
+                                         0.0, 1.0, 1.0, 1.0, 0.0};
 double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0, 
                                         0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0};                                                                                                                                  
-
                    
-// ADICIONE SUAS IMAGENS
+double coracao1[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
+                       1.0, 0.0, 1.0, 0.0, 1.0, 
+                       1.0, 0.0, 0.0, 0.0, 1.0,
+                       0.0, 1.0, 0.0, 1.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0};
 
+double coracao2[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
+                       1.0, 0.5, 1.0, 0.5, 1.0, 
+                       1.0, 0.5, 0.5, 0.5, 1.0,
+                       0.0, 1.0, 0.5, 1.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0};
 
+double coracao3[25] =  {0.3, 1.0, 0.3, 1.0, 0.3,
+                        0.3, 1.0, 1.0, 1.0, 0.3, 
+                        0.3, 1.0, 1.0, 1.0, 0.3,
+                        0.3, 0.0, 0.0, 0.0, 0.3,
+                        0.3, 0.3, 1.0, 0.3, 0.3};
+
+double coracao4[25] =  {1.0, 1.0, 0.0, 1.0, 1.0,
+                        1.0, 0.0, 1.0, 0.0, 1.0, 
+                        0.0, 1.0, 0.0, 1.0, 0.0,
+                        0.0, 0.0, 1.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.8, 0.8};
+
+double coracao5[25] =  {0.5, 0.7, 0.5, 0.7, 0.5,
+                        0.7, 0.0, 0.7, 0.0, 0.7, 
+                        0.7, 0.0, 0.5, 0.0, 0.7,
+                        0.0, 0.7, 0.5, 0.7, 0.0,
+                        0.5, 0.5, 0.7, 0.5, 0.5};  
+
+// ADICIONE SUAS IMAGENS  
+
+// DESENHO PARA AS LEDs BRANCAS COM 20% DE INTENSIDADE
+double leds_cor_branca[25] = {0.2, 0.2, 0.2, 0.2, 0.2,
+                             0.2, 0.2, 0.2, 0.2, 0.2, 
+                             0.2, 0.2, 0.2, 0.2, 0.2,
+                             0.2, 0.2, 0.2, 0.2, 0.2,
+                             0.2, 0.2, 0.2, 0.2, 0.2};
+
+// DESENHO PARA APAGAR AS LEDS
+double leds_desligados[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
+                              0.0, 0.0, 0.0, 0.0, 0.0, 
+                              0.0, 0.0, 0.0, 0.0, 0.0,         
+                              0.0, 0.0, 0.0, 0.0, 0.0,          
+                              0.0, 0.0, 0.0, 0.0, 0.0};                     
 
 // Função para tocar uma nota específica
 void Tocar_nota(int nota, int duracao_ms) {
@@ -112,7 +157,7 @@ void Tocar_piscando() {
         Tocar_nota(nota, duracao); // Toca cada nota
     }
 }
-
+// possível colocar outras funções para buzzer
 
 //imprimir valor binário
 void imprimir_binario(int num) {
@@ -128,8 +173,8 @@ static void gpio_irq_handler(uint gpio, uint32_t events){
     reset_usb_boot(0, 0); //habilita o modo de gravação do microcontrolador
 }
 
-//rotina para definição da intensidade de cores do led
-uint32_t matrix_rgb(double b, double r, double g) {
+//Rotina para definição de cores do led
+uint32_t matrix_rgb(double r, double g, double b) {
     unsigned char R, G, B;
     R = r * 255;
     G = g * 255;
@@ -137,25 +182,50 @@ uint32_t matrix_rgb(double b, double r, double g) {
     return (G << 24) | (R << 16) | (B << 8);
 }
 
-//rotina para acionar a matrix de leds - ws2812b
-void desenho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm, double r, double g, double b){
-    for (int16_t i = 0; i < NUM_PIXELS; i++) {
-        if (desenho[24 - i] == 1) { 
-            valor_led = matrix_rgb(b = 1.0, r = 0.0, g = 0.0); // Led Azul
-        } else if (desenho[24 - i] == 2) { 
-            valor_led = matrix_rgb(b = 0.0, r = 1.0, g = 0.0); // Led Vermelho
-        } else if (desenho[24 - i] == 3) { 
-            valor_led = matrix_rgb(b = 0.0, r = 0.0, g = 1.0); // Led Verde 
-        } else if (desenho[24 - i] == 4) { 
-            valor_led = matrix_rgb(b = 0.0, r = 1.0, g = 1.0); // Led Amarelo
-        } else if (desenho[24 - i] == 5) { 
-            valor_led = matrix_rgb(b = 1.0, r = 0.0, g = 1.0); // Led Ciano
-        } else if (desenho[24 - i] == 6) { 
-            valor_led = matrix_rgb(b = 1.0, r = 1.0, g = 0.0); // Led Magenta                      
-        } else {
-            valor_led = matrix_rgb(0.0, 0.0, 0.0);  // Led Apagado          
-        }
+//Rotina para acionar a matriz de LEDs - ws2812b
+//Basta colocar a matriz desenho[25] e escolher uma das cores
+void desenho_pio(double *desenho, int cor){
+    uint32_t valor_led;
+    if (cor == 1) { //liga todos os LEDs na cor vermelha
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        uint32_t valor_led = matrix_rgb(desenho[24-i], 0.0, 0.0);
         pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==2) { //liga todos os LEDs na cor amarela
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        valor_led = matrix_rgb(desenho[24-i], desenho[24-i], 0.0);
+        pio_sm_put_blocking(pio, sm, valor_led);
+        } 
+    } else if (cor==3) { //liga todos os LEDs na cor verde
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, desenho[24-i], 0.0);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==4) { //liga todos os LEDs na cor ciano
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, desenho[24-i], desenho[24-i]);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==5) { //liga todos os LEDs na cor azul
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, 0.0, desenho[24-i]);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==6) { //liga todos os LEDs na cor magenta
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho[24-i], 0.0, desenho[24-i]);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==7) { //liga todos os LEDs na cor branca
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho[24-i], desenho[24-i], desenho[24-i]);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else { //Desliga todos os LEDs
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, 0.0, 0.0);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
     }
     imprimir_binario(valor_led);
 }
@@ -166,6 +236,7 @@ char scan_keypad() {
         gpio_put(row_pins[row], 0); // Ativa a linha atual
         for (int col = 0; col < COLS; col++) {
             if (gpio_get(col_pins[col]) == 0) { // Verifica se a coluna está ativa
+                printf("Tecla detectada: %c\n", KEY_MAP[row * COLS + col]);
                 gpio_put(row_pins[row], 1); // Restaura a linha
                 return KEY_MAP[row * COLS + col];
             }
@@ -194,18 +265,73 @@ void menu() {
     printf("\nMenu de Opcoes:\n");
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Carinha Feliz Piscando\n");
+    printf("2 - Coracão Piscando\n");
+    printf("8 - Pong ATARI 1972\n");
     printf("A - Desenho a definir\n");
-    printf("B - Desenho a definir\n"); 
+    printf("B - Desenho a definir\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
     printf("D - Desenho a definir\n");
     printf("* - Desenho a definir\n");
-    printf("# - Desenho a definir\n");
+    printf("# - LEDs \n");
 }
 
-void animacaoPONG_RGB(){ // 5 pra linhas e colunas totalizando a matriz de 25 led 3 pra RGB
+// Função para ligar LEDs brancas com 20% de intensidade
+void leds_brancas(int n){
+    desenho_pio(leds_cor_branca, n);
+}
+// Função para desligar LEDs 
+void desligar_leds(){
+    desenho_pio(leds_desligados, 0);
+}
+
+void animação_mariana(int n) {
+    desenho_pio(carinha_feliz_piscando, n);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, n);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, n);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, n);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, n);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, n);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, n);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando                
+    desenho_pio(carinha_feliz_piscando_2, n);
+}
+
+void animacao_helen(){
+    desenho_pio(coracao1, 1);  
+    sleep_ms(500);              
+    desenho_pio(coracao2, 2);  
+    sleep_ms(500);              
+    desenho_pio(coracao3, 3);  
+    sleep_ms(500);              
+    desenho_pio(coracao4, 4);  
+    sleep_ms(500);              
+    desenho_pio(coracao5, 5);  
+}
+
+// Função para converter a posição do matriz para uma posição do vetor.
+int getIndex(int x, int y) {
+    // Se a linha for par (0, 2, 4), percorremos da esquerda para a direita.
+    // Se a linha for ímpar (1, 3), percorremos da direita para a esquerda.
+    if (y % 2 == 0) {
+        return 24-(y * 5 + x); // Linha par (esquerda para direita).
+    } else {
+        return 24-(y * 5 + (4 - x)); // Linha ímpar (direita para esquerda).
+    }
+
+void animacaoPONG_ISRAELFALCAO(){
 
      while (true) {
-    int matriz [5][5][3] = { //  {0, 0, 255} correspondente as cores utilizadas no projeto
+    int matriz [5][5][3] = {
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
@@ -213,7 +339,7 @@ void animacaoPONG_RGB(){ // 5 pra linhas e colunas totalizando a matriz de 25 le
     {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
 };
 
-    for(int linha = 0; linha < 5; linha++){ // for pra percorrer as linhas da matriz
+    for(int linha = 0; linha < 5; linha++){
     for(int coluna = 0; coluna < 5; coluna++){
       int posicao = getIndex(linha, coluna);
       npSetLED(posicao, matriz[coluna][linha][0], matriz[coluna][linha][1], matriz[coluna][linha][2]);
@@ -357,14 +483,13 @@ int matriz3 [5][5][3] = {
 
       npWrite();
       sleep_ms(1500);
-
+   
 //função principal
 int main() {
-    PIO pio = pio0; 
+    pio = pio0; 
     bool ok;
     uint32_t valor_led;
     double r = 0.0, b = 0.0, g = 1.0;
-    
     
    // Configura clock
     ok = set_sys_clock_khz(128000, false);
@@ -389,39 +514,95 @@ int main() {
     menu();
 
     while (true) {
-        
         char key = scan_keypad();
-        if (key != '\0') {
-            printf("\n>> Você pressionou a tecla: %c <<\n", key);
-            
-             
+        
+        if (key != 0) {  // Verifica se alguma tecla foi pressionada
+            switch (key) {
 
-            if (key == '1') {
-                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);
-                Tocar_piscando(); // Toca o barulhinho piscando
-                desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);                
-                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);
-                Tocar_piscando(); // Toca o barulhinho piscando
-                desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);                
-                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);
-                Tocar_piscando(); // Toca o barulhinho piscando
-                desenho_pio(carinha_feliz_piscando_1, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);                
-                desenho_pio(carinha_feliz_piscando, valor_led, pio, sm, r, g, b);
-                sleep_ms(400);
-                Tocar_piscando(); // Toca o barulhinho piscando                
-                desenho_pio(carinha_feliz_piscando_2, valor_led, pio, sm, r, g, b);
+            case 'A':  // Desliga todos os LEDs
+                desligar_leds();
+                printf("LEDs desligados.\n");   
+            break;
 
-            } else if (key == '2') {            
-                Tocar_melodia(); // Toca a melodia             
-            } // ADICIONE SUAS TECLAS
+            case 'B':  // Liga todos os LEDs como azul com intensidade 100%
+                // Adiconar rotina aqui.
+                printf("LEDs azuis ligados com intensidade de 100%%.\n");   
+            break;
+
+            case 'C':  // Liga todos os LEDs como vermelho com intensidade 80%
+                // Adiconar rotina aqui.
+                printf("LEDs vermelhos ligados com intensidade de 80%%.\n");   
+            break;
+
+            case 'D':  // Liga todos os LEDs como verde com intensidade 50%
+                // Adiconar rotina aqui.
+                printf("LEDs verdes ligados com intensidade de 50%%.\n");   
+            break;
+
+            case '#':  // Liga todos os LEDs como branco com intensidade 20%
+                leds_brancas(7);
+                printf("LEDs brancos ligados com intensidade de 20%%.\n");   
+            break;
             
+            case '*':  // Raspberry sai do modo de execução e habilita o modo de gravação (reboot)
+                // Adiconar rotina aqui.
+                printf("Regravação do Raspberry Pi Pico W inciada.\n");   
+            break;
             
+            case '1':  // Animação da Mariana
+                animação_mariana(6); // Adiconada a rotina aqui
+                printf("Animação do botão 1 foi acionada.\n");
+            break;
+
+            case '2':  // Animação da Helen
+                animacao_helen(); 
+                printf("Animação do botão 2 foi acionada.\n");
+            break;
+
+            case '3':  // Animação do Kauan
+                // Adiconar rotina aqui.
+                printf("Animação do botão 3 foi acionada.\n");
+            break;
+
+            case '4':  // Animação do Lucas
+                // Adiconar rotina aqui.
+                printf("Animação do botão 4 foi acionada.\n");
+            break;
+
+            case '5':  // Animação da Edna
+                // Adiconar rotina aqui.
+                printf("Animação do botão 5 foi acionada.\n");
+            break;
+
+            case '6':  // Animação do Daniel
+                // Adiconar rotina aqui.
+                printf("Animação do botão 6 foi acionada.\n");
+            break;
+
+            case '7':  // Animação do Alexandro
+                // Adiconar rotina aqui.
+                printf("Animação do botão 7 foi acionada.\n");
+            break;
+
+            case '8':  // Animação do Israel
+               animacaoPONG_ISRAELFALCAO();
+                printf("Animação do botão 8 foi acionada.\n");
+            break;
+
+            case '9':  // Animação do Ylo
+                // Adiconar rotina aqui.
+                printf("Animação do botão 9 foi acionada.\n");
+            break;
+
+            case '0':  // Melodia criada pela Mariana
+                Tocar_melodia(); // Toca a melodia
+                printf("Melodia musical foi acionada.\n");
+            break;
+
+            default:
+                printf("Tecla %c pressionada, sem acao atribuida.\n", key);
+            break;
+            } 
         }
 
         sleep_ms(100);
