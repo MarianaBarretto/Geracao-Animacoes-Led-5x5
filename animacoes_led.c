@@ -68,9 +68,51 @@ double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0,
                                         0.0, 0.0, 0.0, 0.0, 0.0};                                                                                                                                  
                    
-// ADICIONE SUAS IMAGENS
+double coracao1[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
+                       1.0, 0.0, 1.0, 0.0, 1.0, 
+                       1.0, 0.0, 0.0, 0.0, 1.0,
+                       0.0, 1.0, 0.0, 1.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0};
 
+double coracao2[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
+                       1.0, 0.5, 1.0, 0.5, 1.0, 
+                       1.0, 0.5, 0.5, 0.5, 1.0,
+                       0.0, 1.0, 0.5, 1.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0};
 
+double coracao3[25] =  {0.3, 1.0, 0.3, 1.0, 0.3,
+                        0.3, 1.0, 1.0, 1.0, 0.3, 
+                        0.3, 1.0, 1.0, 1.0, 0.3,
+                        0.3, 0.0, 0.0, 0.0, 0.3,
+                        0.3, 0.3, 1.0, 0.3, 0.3};
+
+double coracao4[25] =  {1.0, 1.0, 0.0, 1.0, 1.0,
+                        1.0, 0.0, 1.0, 0.0, 1.0, 
+                        0.0, 1.0, 0.0, 1.0, 0.0,
+                        0.0, 0.0, 1.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.8, 0.8};
+
+double coracao5[25] =  {0.5, 0.7, 0.5, 0.7, 0.5,
+                        0.7, 0.0, 0.7, 0.0, 0.7, 
+                        0.7, 0.0, 0.5, 0.0, 0.7,
+                        0.0, 0.7, 0.5, 0.7, 0.0,
+                        0.5, 0.5, 0.7, 0.5, 0.5};  
+
+// ADICIONE SUAS IMAGENS  
+
+// DESENHO PARA AS LEDs BRANCAS COM 20% DE INTENSIDADE
+double leds_cor_branca[25] = {0.2, 0.2, 0.2, 0.2, 0.2,
+                             0.2, 0.2, 0.2, 0.2, 0.2, 
+                             0.2, 0.2, 0.2, 0.2, 0.2,
+                             0.2, 0.2, 0.2, 0.2, 0.2,
+                             0.2, 0.2, 0.2, 0.2, 0.2};
+
+// DESENHO PARA APAGAR AS LEDS
+double leds_desligados[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
+                              0.0, 0.0, 0.0, 0.0, 0.0, 
+                              0.0, 0.0, 0.0, 0.0, 0.0,         
+                              0.0, 0.0, 0.0, 0.0, 0.0,          
+                              0.0, 0.0, 0.0, 0.0, 0.0};                     
 
 // Função para tocar uma nota específica
 void Tocar_nota(int nota, int duracao_ms) {
@@ -194,6 +236,7 @@ char scan_keypad() {
         gpio_put(row_pins[row], 0); // Ativa a linha atual
         for (int col = 0; col < COLS; col++) {
             if (gpio_get(col_pins[col]) == 0) { // Verifica se a coluna está ativa
+                printf("Tecla detectada: %c\n", KEY_MAP[row * COLS + col]);
                 gpio_put(row_pins[row], 1); // Restaura a linha
                 return KEY_MAP[row * COLS + col];
             }
@@ -222,12 +265,22 @@ void menu() {
     printf("\nMenu de Opcoes:\n");
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Carinha Feliz Piscando\n");
+    printf("2 - Coracão Piscando\n");
     printf("A - Desenho a definir\n");
     printf("B - Desenho a definir\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
     printf("D - Desenho a definir\n");
     printf("* - Desenho a definir\n");
-    printf("# - Desenho a definir\n");
+    printf("# - LEDs \n");
+}
+
+// Função para ligar LEDs brancas com 20% de intensidade
+void leds_brancas(int n){
+    desenho_pio(leds_cor_branca, n);
+}
+// Função para desligar LEDs 
+void desligar_leds(){
+    desenho_pio(leds_desligados, 0);
 }
 
 void animação_mariana(int n) {
@@ -250,6 +303,18 @@ void animação_mariana(int n) {
     sleep_ms(400);
     Tocar_piscando(); // Toca o barulhinho piscando                
     desenho_pio(carinha_feliz_piscando_2, n);
+}
+
+void animacao_helen(){
+    desenho_pio(coracao1, 1);  
+    sleep_ms(500);              
+    desenho_pio(coracao2, 2);  
+    sleep_ms(500);              
+    desenho_pio(coracao3, 3);  
+    sleep_ms(500);              
+    desenho_pio(coracao4, 4);  
+    sleep_ms(500);              
+    desenho_pio(coracao5, 5);  
 }
 
 //função principal
@@ -288,7 +353,7 @@ int main() {
             switch (key) {
 
             case 'A':  // Desliga todos os LEDs
-                // Adiconar rotina aqui.
+                desligar_leds();
                 printf("LEDs desligados.\n");   
             break;
 
@@ -308,7 +373,7 @@ int main() {
             break;
 
             case '#':  // Liga todos os LEDs como branco com intensidade 20%
-                // Adiconar rotina aqui.
+                leds_brancas(7);
                 printf("LEDs brancos ligados com intensidade de 20%%.\n");   
             break;
             
@@ -323,7 +388,7 @@ int main() {
             break;
 
             case '2':  // Animação da Helen
-                // Adiconar rotina aqui.
+                animacao_helen(); 
                 printf("Animação do botão 2 foi acionada.\n");
             break;
 
