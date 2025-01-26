@@ -98,6 +98,37 @@ double coracao5[25] =  {0.5, 0.7, 0.5, 0.7, 0.5,
                         0.0, 0.7, 0.5, 0.7, 0.0,
                         0.5, 0.5, 0.7, 0.5, 0.5};  
 
+//frames paran animação de setas
+double setas1[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 1.0, 1.0, 1.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0};
+ 
+double setas2[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 1.0, 1.0, 1.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 1.0, 1.0, 1.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0};
+
+double setas3[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 1.0, 1.0, 0.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 1.0, 1.0, 0.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0};
+
+double setas4[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 1.0, 1.0, 1.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0};
+
+double setas5[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 0.0, 1.0, 1.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 0.0, 1.0, 1.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0}; 
+
 // ADICIONE SUAS IMAGENS  
 
 // DESENHO PARA AS LEDs BRANCAS COM 20% DE INTENSIDADE
@@ -287,6 +318,25 @@ void leds_vermelhos_80() {
     printf("Todos os LEDs foram configurados para vermelho com intensidade de 80%%.\n");
 }
 
+// Implementação da opção 'D'
+void leds_verdes_50() {
+    uint32_t buffer[NUM_PIXELS]; // Cria um buffer
+    uint32_t valor_led = matrix_rgb(0.0, 0.5, 0.0); // Preenche o buffer com a cor verde (50%)
+    for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        buffer[i] = valor_led;
+    }
+    for (int16_t i = 0; i < NUM_PIXELS; i++) { // Envia os dados para todos os LEDs ao mesmo tempo
+        pio_sm_put_blocking(pio, sm, buffer[i]);
+    }
+    printf("Todos os LEDs foram configurados para verde com intensidade de 50%%.\n");
+}
+
+// Implementação da opção '*'
+//Função para dar reboot na placa
+void reboot() {
+    reset_usb_boot(0,0);
+}
+
 // Verifica se uma tecla foi pressionada no teclado matricial
 char scan_keypad() {
     for (int row = 0; row < ROWS; row++) {
@@ -324,7 +374,7 @@ void menu() {
     printf("1 - Carinha Feliz Piscando\n");
     printf("2 - Coracão Piscando\n");
     printf("A - Desenho a definir\n");
-    printf("B - Desenho a definir\n");
+    printf("4 - Setas\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
     printf("D - Desenho a definir\n");
     printf("* - Desenho a definir\n");
@@ -373,6 +423,27 @@ void animacao_helen(){
     sleep_ms(500);              
     desenho_pio(coracao5, 5);  
 }
+
+// Animação das Setas
+void animacao_Lucas(){
+
+    desenho_pio(setas1, 1);  
+    sleep_ms(500);   
+    Tocar_piscando();           
+    desenho_pio(setas3, 2);  
+    sleep_ms(500);    
+    Tocar_piscando();          
+    desenho_pio(setas4, 3);  
+    sleep_ms(500);    
+    Tocar_piscando();          
+    desenho_pio(setas5, 4);  
+    sleep_ms(500);     
+    Tocar_piscando();         
+    desenho_pio(setas2, 3); 
+    sleep_ms(500);        
+    Tocar_piscando();      
+        
+    }
 
 //função principal
 int main() {
@@ -425,7 +496,7 @@ int main() {
             break;
 
             case 'D':  // Liga todos os LEDs como verde com intensidade 50%
-                // Adiconar rotina aqui.
+                leds_verdes_50();
                 printf("LEDs verdes ligados com intensidade de 50%%.\n");   
             break;
 
@@ -435,7 +506,7 @@ int main() {
             break;
             
             case '*':  // Raspberry sai do modo de execução e habilita o modo de gravação (reboot)
-                // Adiconar rotina aqui.
+                void reboot();
                 printf("Regravação do Raspberry Pi Pico W inciada.\n");   
             break;
             
@@ -455,7 +526,7 @@ int main() {
             break;
 
             case '4':  // Animação do Lucas
-                // Adiconar rotina aqui.
+                animacao_Lucas();
                 printf("Animação do botão 4 foi acionada.\n");
             break;
 
