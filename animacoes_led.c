@@ -6,14 +6,151 @@
 #include "hardware/clocks.h"
 #include "hardware/adc.h"
 #include "pico/bootrom.h"
-#include "pio_matrix.pio.h" //arquivo .pio
 
-//configurando a matriz de LEDs
-#define NUM_PIXELS 25 //número de LEDs
-#define OUT_PIN 19 //pino de onde os LEDs estão conectados
+//arquivo .pio
+#include "animacoes_led.pio.h"
 
-// função para definir cor RGB para LEDs da Matriz
-uint32_t matriz_RGB(double r, double g, double b){
+//número de LEDs
+#define NUM_PIXELS 25
+
+//pino de saída
+#define OUT_PIN 19
+
+// GPIO do buzzer
+#define BUZZER 21 // Buzzer na GPIO 21
+
+//Variáveis Globais
+PIO pio;
+uint sm;
+
+// Frequências das notas (em Hz)
+#define DO 261
+#define RE 293
+#define MI 329
+#define FA 349
+#define SOL 392
+#define LA 440
+#define SI 493
+#define DO_OCTAVE 523
+
+// Definições do teclado matricial
+#define ROWS 4
+#define COLS 4
+
+// Define as linhas e colunas do teclado matricial (ajustado com os novos pinos)
+uint row_pins[ROWS] = {8, 7, 6, 5};    // GPIOs para as linhas (R1 a R4)
+uint col_pins[COLS] = {4, 3, 2, 1};    // GPIOs para as colunas (C1 a C4)
+
+// Mapa das teclas do teclado matricial
+char KEY_MAP[16] = {
+    '1', '2', '3', 'A',
+    '4', '5', '6', 'B',
+    '7', '8', '9', 'C',
+    '*', '0', '#', 'D'
+};
+
+//Vetores de imagens - Valores devem variar de 0 a 1 (de acordo com a porcentagem de intensidade)
+
+//Animação 1
+double carinha_feliz_piscando[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
+                                       0.0, 1.0, 0.0, 1.0, 0.0, 
+                                       0.0, 0.0, 0.0, 0.0, 0.0,
+                                       1.0, 0.0, 0.0, 0.0, 1.0,
+                                       0.0, 1.0, 1.0, 1.0, 0.0};
+double carinha_feliz_piscando_1[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
+                                         0.0, 0.0, 0.0, 1.0, 0.0, 
+                                         0.0, 0.0, 0.0, 0.0, 0.0,
+                                         1.0, 0.0, 0.0, 0.0, 1.0,
+                                         0.0, 1.0, 1.0, 1.0, 0.0};
+double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
+                                        0.0, 0.0, 0.0, 0.0, 0.0, 
+                                        0.0, 0.0, 0.0, 0.0, 0.0,
+                                        0.0, 0.0, 0.0, 0.0, 0.0,
+                                        0.0, 0.0, 0.0, 0.0, 0.0};                                                                                                                                  
+                   
+// ADICIONE SUAS IMAGENS
+
+double coracao1[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
+                       1.0, 0.0, 1.0, 0.0, 1.0, 
+                       1.0, 0.0, 0.0, 0.0, 1.0,
+                       0.0, 1.0, 0.0, 1.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0};
+
+double coracao2[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
+                       1.0, 0.5, 1.0, 0.5, 1.0, 
+                       1.0, 0.5, 0.5, 0.5, 1.0,
+                       0.0, 1.0, 0.5, 1.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0};
+
+double coracao3[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.0, 
+                        0.0, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.0, 0.0}; 
+
+
+
+// Função para tocar uma nota específica
+void Tocar_nota(int nota, int duracao_ms) {
+    int periodo = 1000000 / nota; // Calcula o período da onda (em microssegundos)
+    int ciclos = (nota * duracao_ms) / 1000; // Calcula o número de ciclos a serem tocados
+
+    for (int i = 0; i < ciclos; i++) {
+        gpio_put(BUZZER, true);  // Liga o buzzer
+        sleep_us(periodo / 2);    // Meio ciclo (high)
+        gpio_put(BUZZER, false); // Desliga o buzzer
+        sleep_us(periodo / 2);    // Meio ciclo (low)
+    }
+}
+
+// Função para tocar uma melodia
+void Tocar_melodia() {
+    // Melodia (sequência de notas e duração em ms)
+    int melodia[][2] = {
+        {DO, 400}, {RE, 400}, {MI, 400}, {FA, 400},
+        {SOL, 400}, {LA, 400}, {SI, 400}, {DO_OCTAVE, 800},
+        {SI, 400}, {LA, 400}, {SOL, 400}, {FA, 400},
+        {MI, 400}, {RE, 400}, {DO, 800}
+    };
+
+    for (int i = 0; i < sizeof(melodia) / sizeof(melodia[0]); i++) {
+        int nota = melodia[i][0];
+        int duracao = melodia[i][1];
+        Tocar_nota(nota, duracao); // Toca cada nota
+    }
+}
+
+// Função para tocar uma melodia
+void Tocar_piscando() {
+    // Melodia (sequência de notas e duração em ms)
+    int melodia[][2] = {
+        {DO, 400}
+    };
+
+    for (int i = 0; i < sizeof(melodia) / sizeof(melodia[0]); i++) {
+        int nota = melodia[i][0];
+        int duracao = melodia[i][1];
+        Tocar_nota(nota, duracao); // Toca cada nota
+    }
+}
+// possível colocar outras funções para buzzer
+
+//imprimir valor binário
+void imprimir_binario(int num) {
+    for (int i = 31; i >= 0; i--) {
+        (num & (1 << i)) ? printf("1") : printf("0");
+    }
+}
+
+//rotina da interrupção
+static void gpio_irq_handler(uint gpio, uint32_t events){
+    printf("Interrupção ocorreu no pino %d, no evento %d\n", gpio, events);
+    printf("HABILITANDO O MODO GRAVAÇÃO");
+    reset_usb_boot(0, 0); //habilita o modo de gravação do microcontrolador
+}
+
+//Rotina para definição de cores do led
+uint32_t matrix_rgb(double r, double g, double b) {
     unsigned char R, G, B;
     R = r * 255;
     G = g * 255;
@@ -21,204 +158,242 @@ uint32_t matriz_RGB(double r, double g, double b){
     return (G << 24) | (R << 16) | (B << 8);
 }
 
-//função para imprimir binários
-void imprimir_binario(int num){
-    int i;
-    for(i = 31; i >= 0; i--){
-        (num & (1 << i)) ? printf("1") : printf("0");
-    }
-}                       
-
-void   enho_pio(double *desenho, uint32_t valor_led, PIO pio, uint sm) {
-    for (int16_t i = 0; i < NUM_PIXELS; i++) {
-        //aplicando cores com base no valor do desenho[i]
-        if (desenho[i] == 1.0) {
-            valor_led = matriz_RGB(0.0, 1.0, 0.0); //vermelho
-        } else if (desenho[i] == 0.5) {
-            valor_led = matriz_RGB(1.0, 0.0, 0.0); //azul
-        } else if (desenho[i] == 0.3) {
-            valor_led = matriz_RGB(0.0, 1.0, 1.0); //amarelo
-        } else if (desenho[i] == 0.8) {
-            valor_led = matriz_RGB(1.0, 1.0, 0.0); //ciano
-        } else if (desenho[i] == 0.7) {
-            valor_led = matriz_RGB(0.0, 0.0, 1.0); //verde
-        } else {
-            //caso contrário, usa escala de cinza (por exemplo, se o valor for entre 0 e 1)
-            valor_led = matriz_RGB(desenho[i], desenho[i], desenho[i]);
+//Rotina para acionar a matriz de LEDs - ws2812b
+//Basta colocar a matriz desenho[25] e escolher uma das cores
+void desenho_pio(double *desenho, int cor){
+    uint32_t valor_led;
+    if (cor == 1) { //liga todos os LEDs na cor vermelha
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        uint32_t valor_led = matrix_rgb(desenho[24-i], 0.0, 0.0);
+        pio_sm_put_blocking(pio, sm, valor_led);
         }
-
-        //envia o valor RGB para o LED
+    } else if (cor==2) { //liga todos os LEDs na cor amarela
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+        valor_led = matrix_rgb(desenho[24-i], desenho[24-i], 0.0);
         pio_sm_put_blocking(pio, sm, valor_led);
-        //imprime a cor em binário
-        imprimir_binario(valor_led);
+        } 
+    } else if (cor==3) { //liga todos os LEDs na cor verde
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, desenho[24-i], 0.0);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==4) { //liga todos os LEDs na cor ciano
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, desenho[24-i], desenho[24-i]);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==5) { //liga todos os LEDs na cor azul
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, 0.0, desenho[24-i]);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==6) { //liga todos os LEDs na cor magenta
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho[24-i], 0.0, desenho[24-i]);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else if (cor==7) { //liga todos os LEDs na cor branca
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(desenho[24-i], desenho[24-i], desenho[24-i]);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
+    } else { //Desliga todos os LEDs
+        for (int16_t i = 0; i < NUM_PIXELS; i++) {
+            valor_led = matrix_rgb(0.0, 0.0, 0.0);
+            pio_sm_put_blocking(pio, sm, valor_led);
+        }
     }
+    imprimir_binario(valor_led);
 }
 
-//função para exibir os desenhos
-void exibir_animacao(double *desenho[], PIO pio, uint sm){
-    printf("Exibindo Animações...");
-    for (int i = 0; i < 4; i++){ //exibe os 4 primeiros desenhos
-        desenho_pio(desenho[i], 0, pio, sm);
-        sleep_ms(500); //tempo de um desenho para o outro
-    }
-    //exibe o ultimo desenho e o mantêm visivel para que a tecla A o desligue  
-    desenho_pio(desenho[4], 0, pio, sm);
-}
-
-// função para desligar todos os LEDs
-void desligar_LEDs(double *desenho){
-     printf("Desligando LEds...");
-    for (int i = 0; i < NUM_PIXELS; i++){
-        desenho[i] = 0.0; //irá definir todos os LEDs como desligados
-    }
-    
-}
-
-//ligar LEDs brancas com 20% de intensidade
-void ligar_leds_brancos(double *desenho, PIO pio, uint sm) {
-    printf("Exibindo LEDs Brancos...");
-    for (int i = 0; i < NUM_PIXELS; i++) {
-        uint32_t valor_led = matriz_RGB(0.2, 0.2, 0.2); //branco com 20% de intensidade
-        pio_sm_put_blocking(pio, sm, valor_led);
-    }
-}
-
-//configurando o teclado matricial
-#define ROWS 4 //4 linhas
-#define COLS 4 //4 colunas
-
-uint row_pins[ROWS] = {8, 7, 6, 5}; //GPIOs conectadas as linhas (R1 a R4)
-uint col_pins[COLS] = {4, 3, 2, 1}; //GPIOs conectadas as colunas (C1 a C4)
-
-//mapeando as teclas 
-const char mapear_teclas[ROWS][COLS] = {
-    {'1', '2', '3', 'A'},
-    {'4', '5', '6', 'B'},
-    {'7', '8', '9', 'C'},
-    {'*', '0', '#', 'D'}
-};
-
-//preparando as linhas e colunas do teclado
-void configurar_teclado(){
-    for (int i = 0; i < ROWS; i++) {
-        gpio_init(row_pins[i]);              //configura a linha
-        gpio_set_dir(row_pins[i], GPIO_OUT); //preparando as linhas
-        gpio_put(row_pins[i], 1);            //começamos com as linhas "desligadas"
-    }
-
-    for (int i = 0; i < COLS; i++) {
-        gpio_init(col_pins[i]);              //configura a coluna
-        gpio_set_dir(col_pins[i], GPIO_OUT); //colunas receberão sinal das linhas
-        gpio_put(col_pins[i], 1);            //habilita pull-up nas colunas
-    }
-
-}
-
-// função para ler teclas
-char leitura_teclas(){
-    for (int row = 0; row < ROWS; row++){
-        gpio_put(row_pins[row], 0); //ativa a linha atual
-        for (int col = 0; col < COLS; col++){ //verifica cada coluna
-            if (!gpio_get(col_pins[col])){ //detecta tecla pressionada
-                char tecla = mapear_teclas[row * COLS + col]; // armazena o valor da tecla
-                sleep_ms(500); //aguarda debounce
-                return mapear_teclas[row][col]; //retorna tecla pressionada
+// Verifica se uma tecla foi pressionada no teclado matricial
+char scan_keypad() {
+    for (int row = 0; row < ROWS; row++) {
+        gpio_put(row_pins[row], 0); // Ativa a linha atual
+        for (int col = 0; col < COLS; col++) {
+            if (gpio_get(col_pins[col]) == 0) { // Verifica se a coluna está ativa
+                gpio_put(row_pins[row], 1); // Restaura a linha
+                return KEY_MAP[row * COLS + col];
             }
         }
-
-        gpio_put(row_pins[row], 1); //desativa a linha atual
-    } 
-    return '\0'; //retorna isso quando nenhuma tecla pressionada
+        gpio_put(row_pins[row], 1); // Restaura a linha
+    }
+    return '\0'; // Nenhuma tecla pressionada
 }
 
-//vetores com frames do meu desenho
-double desenho[25] =   {0.0, 1.0, 0.0, 1.0, 0.0,
-                        1.0, 0.0, 1.0, 0.0, 1.0, 
-                        1.0, 0.0, 0.0, 0.0, 1.0,
-                        0.0, 1.0, 0.0, 1.0, 0.0,
-                        0.0, 0.0, 1.0, 0.0, 0.0};
-
-
-double desenho2[25] =  {0.0, 1.0, 0.0, 1.0, 0.0,
-                        1.0, 0.5, 1.0, 0.5, 1.0, 
-                        1.0, 0.5, 0.5, 0.5, 1.0,
-                        0.0, 1.0, 0.5, 1.0, 0.0,
-                        0.0, 0.0, 1.0, 0.0, 0.0};
-
-double desenho3[25] =  {0.3, 1.0, 0.3, 1.0, 0.3,
-                        0.3, 1.0, 1.0, 1.0, 0.3, 
-                        0.3, 1.0, 1.0, 1.0, 0.3,
-                        0.3, 0.0, 0.0, 0.0, 0.3,
-                        0.3, 0.3, 1.0, 0.3, 0.3};
-
-double desenho4[25] =  {1.0, 1.0, 0.0, 1.0, 1.0,
-                        1.0, 0.0, 1.0, 0.0, 1.0, 
-                        0.0, 1.0, 0.0, 1.0, 0.0,
-                        0.0, 0.0, 1.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.8, 0.8,};
-
-double desenho5[25] =  {0.5, 0.7, 0.5, 0.7, 0.5,
-                        0.7, 0.0, 0.7, 0.0, 0.7, 
-                        0.7, 0.0, 0.5, 0.0, 0.7,
-                        0.0, 0.7, 0.5, 0.7, 0.0,
-                        0.5, 0.5, 0.7, 0.5, 0.5,};
-
-void menu(){
-    printf("\nMenu de Opções:\n");
-    printf("1 - Reproduzir Animações\n");
-    printf("# - Ligar LEDs na Cor Branca com 20% de Intensidade\n");
-    printf("A - Desligar LEDs\n");
+// Inicializa os pinos do teclado matricial
+void init_keypad() {
+    for (int i = 0; i < ROWS; i++) {
+        gpio_init(row_pins[i]);
+        gpio_set_dir(row_pins[i], GPIO_OUT);
+        gpio_put(row_pins[i], 1);
+    }
+    for (int i = 0; i < COLS; i++) {
+        gpio_init(col_pins[i]);
+        gpio_set_dir(col_pins[i], GPIO_IN);
+        gpio_pull_up(col_pins[i]);
+    }
 }
+
+// Função para mostrar o menu
+void menu() {
+    printf("\nMenu de Opcoes:\n");
+    printf("Escolha uma opcao pressionando a tecla correspondente...\n");
+    printf("1 - Carinha Feliz Piscando\n");
+    printf("A - Desenho a definir\n");
+    printf("B - Desenho a definir\n");
+    printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
+    printf("D - Desenho a definir\n");
+    printf("* - Desenho a definir\n");
+    printf("# - Desenho a definir\n");
+}
+
+void animação_mariana(int n) {
+    desenho_pio(carinha_feliz_piscando, n);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, n);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, n);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, n);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, n);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando
+    desenho_pio(carinha_feliz_piscando_1, n);
+    sleep_ms(400);                
+    desenho_pio(carinha_feliz_piscando, n);
+    sleep_ms(400);
+    Tocar_piscando(); // Toca o barulhinho piscando                
+    desenho_pio(carinha_feliz_piscando_2, n);
+}
+
+void animacao_Helen()
 
 //função principal
-int main(){
-    PIO pio = pio0;
+int main() {
+    pio = pio0; 
     bool ok;
-    uint16_t i;
     uint32_t valor_led;
-    double r = 0.0, b = 0.0, g = 0.0;
-
-    //frequência de clock para 128 MHz
+    double r = 0.0, b = 0.0, g = 1.0;
+    
+   // Configura clock
     ok = set_sys_clock_khz(128000, false);
-    //inicializa todos os codigos stdio padrao ligados ao binario
     stdio_init_all();
 
-    printf("iniciando a transmissão PIO");
-    if (ok) printf("clock set to %ld\n", clock_get_hz(clk_sys));
+    printf("Iniciando a transmissão PIO\n");
+    if (ok) printf("Clock set to %ld\n", clock_get_hz(clk_sys));
 
-    uint offset = pio_add_program(pio, &pio_matrix_program);
+    // Configurações da PIO
+    uint offset = pio_add_program(pio, &animacoes_led_program);
     uint sm = pio_claim_unused_sm(pio, true);
-    pio_matrix_program_init(pio, sm, offset, OUT_PIN);
+    animacoes_led_program_init(pio, sm, offset, OUT_PIN);
 
-    //configura teclado
-    configurar_teclado();
+    // Configura buzzer
+    gpio_init(BUZZER);
+    gpio_set_dir(BUZZER, GPIO_OUT);
 
-    //vetores com desenhos
-    double *desenhos[5] = {desenho, desenho2, desenho3, desenho4, desenho5};
+    // Inicializa teclado matricial
+    init_keypad();
 
-    //loop principal
-    while (1){
-       char tecla = leitura_teclas(); //para ler as teclas pressionadas
+    // Mostra o menu
+    menu();
 
-       if(tecla == '1'){
-            printf("Tecla 1 Pressionada...");
-            exibir_animacao(desenhos,pio, sm);
-        }else if(tecla = '#'){
-            printf("Tecla # Pressionada...");
-            ligar_leds_brancos(desenho, pio, sm); //liga LEDs brancas 20%
-        } else if(tecla = 'A'){
-            printf("Tecla A Pressionada...");
-            desligar_LEDs(desenho);
+    while (true) {
+        char key = scan_keypad();
+        
+        if (key != 0) {  // Verifica se alguma tecla foi pressionada
+            switch (key) {
+
+            case 'A':  // Desliga todos os LEDs
+                // Adiconar rotina aqui.
+                printf("LEDs desligados.\n");   
+            break;
+
+            case 'B':  // Liga todos os LEDs como azul com intensidade 100%
+                // Adiconar rotina aqui.
+                printf("LEDs azuis ligados com intensidade de 100%%.\n");   
+            break;
+
+            case 'C':  // Liga todos os LEDs como vermelho com intensidade 80%
+                // Adiconar rotina aqui.
+                printf("LEDs vermelhos ligados com intensidade de 80%%.\n");   
+            break;
+
+            case 'D':  // Liga todos os LEDs como verde com intensidade 50%
+                // Adiconar rotina aqui.
+                printf("LEDs verdes ligados com intensidade de 50%%.\n");   
+            break;
+
+            case '#':  // Liga todos os LEDs como branco com intensidade 20%
+                // Adiconar rotina aqui.
+                printf("LEDs brancos ligados com intensidade de 20%%.\n");   
+            break;
+            
+            case '*':  // Raspberry sai do modo de execução e habilita o modo de gravação (reboot)
+                // Adiconar rotina aqui.
+                printf("Regravação do Raspberry Pi Pico W inciada.\n");   
+            break;
+            
+            case '1':  // Animação da Mariana
+                animação_mariana(6); // Adiconada a rotina aqui
+                printf("Animação do botão 1 foi acionada.\n");
+            break;
+
+            case '2':  // Animação da Helen
+                // Adiconar rotina aqui.
+                printf("Animação do botão 2 foi acionada.\n");
+            break;
+
+            case '3':  // Animação do Kauan
+                // Adiconar rotina aqui.
+                printf("Animação do botão 3 foi acionada.\n");
+            break;
+
+            case '4':  // Animação do Lucas
+                // Adiconar rotina aqui.
+                printf("Animação do botão 4 foi acionada.\n");
+            break;
+
+            case '5':  // Animação da Edna
+                // Adiconar rotina aqui.
+                printf("Animação do botão 5 foi acionada.\n");
+            break;
+
+            case '6':  // Animação do Daniel
+                // Adiconar rotina aqui.
+                printf("Animação do botão 6 foi acionada.\n");
+            break;
+
+            case '7':  // Animação do Alexandro
+                // Adiconar rotina aqui.
+                printf("Animação do botão 7 foi acionada.\n");
+            break;
+
+            case '8':  // Animação do Israel
+                // Adiconar rotina aqui.
+                printf("Animação do botão 8 foi acionada.\n");
+            break;
+
+            case '9':  // Animação do Ylo
+                // Adiconar rotina aqui.
+                printf("Animação do botão 9 foi acionada.\n");
+            break;
+
+            case '0':  // Melodia criada pela Mariana
+                Tocar_melodia(); // Toca a melodia
+                printf("Melodia musical foi acionada.\n");
+            break;
+
+            default:
+                printf("Tecla %c pressionada, sem acao atribuida.\n", key);
+            break;
+            } 
         }
+
+        sleep_ms(100);
+        printf("\nFrequência de clock %ld\r\n", clock_get_hz(clk_sys));
     }
-    
-
-
 }
-
-
-
-
-
-
-
