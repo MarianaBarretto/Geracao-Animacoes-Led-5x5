@@ -223,6 +223,7 @@ char scan_keypad() {
         gpio_put(row_pins[row], 0); // Ativa a linha atual
         for (int col = 0; col < COLS; col++) {
             if (gpio_get(col_pins[col]) == 0) { // Verifica se a coluna está ativa
+                printf("Tecla detectada: %c\n", KEY_MAP[row * COLS + col]);
                 gpio_put(row_pins[row], 1); // Restaura a linha
                 return KEY_MAP[row * COLS + col];
             }
@@ -282,16 +283,16 @@ void animação_mariana(int n) {
     desenho_pio(carinha_feliz_piscando_2, n);
 }
 
-void animacao_Helen(int n){
-    desenho_pio(coracao1, 1);  
-    sleep_ms(500);              // Aguarda meio segundo
-    desenho_pio(coracao2, 5);  // Azul
-    sleep_ms(500);              // Aguarda meio segundo
-    desenho_pio(coracao3, 3);  // Verde
-    sleep_ms(500);              // Aguarda meio segundo
-    desenho_pio(coracao4, 4);  // Ciano
-    sleep_ms(500);              // Aguarda meio segundo
-    desenho_pio(coracao5, 7);  // Branco
+void animacao_helen(int n){
+    desenho_pio(coracao1, n);  
+    sleep_ms(500);              
+    desenho_pio(coracao2, n);  
+    sleep_ms(500);              
+    desenho_pio(coracao3, n);  
+    sleep_ms(500);              
+    desenho_pio(coracao4, n);  
+    sleep_ms(500);              
+    desenho_pio(coracao5, n);  
 }
 
 //função principal
@@ -365,7 +366,7 @@ int main() {
             break;
 
             case '2':  // Animação da Helen
-                // Adiconar rotina aqui.
+                animacao_helen(4); 
                 printf("Animação do botão 2 foi acionada.\n");
             break;
 
