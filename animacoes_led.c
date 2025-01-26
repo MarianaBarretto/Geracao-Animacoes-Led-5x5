@@ -98,6 +98,37 @@ double coracao5[25] =  {0.5, 0.7, 0.5, 0.7, 0.5,
                         0.0, 0.7, 0.5, 0.7, 0.0,
                         0.5, 0.5, 0.7, 0.5, 0.5};  
 
+//frames paran animação de setas
+double setas1[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 1.0, 1.0, 1.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0};
+ 
+double setas2[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 1.0, 1.0, 1.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 1.0, 1.0, 1.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0};
+
+double setas3[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 1.0, 1.0, 0.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 1.0, 1.0, 0.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0};
+
+double setas4[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 1.0, 1.0, 1.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0};
+
+double setas5[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
+                              0.0, 0.0, 1.0, 1.0, 0.0,
+                              1.0, 1.0, 1.0, 1.0, 1.0,
+                              0.0, 0.0, 1.0, 1.0, 0.0,
+                              0.0, 0.0, 1.0, 0.0, 0.0}; 
+
 // ADICIONE SUAS IMAGENS  
 
 // DESENHO PARA AS LEDs BRANCAS COM 20% DE INTENSIDADE
@@ -324,7 +355,7 @@ void menu() {
     printf("1 - Carinha Feliz Piscando\n");
     printf("2 - Coracão Piscando\n");
     printf("A - Desenho a definir\n");
-    printf("B - Desenho a definir\n");
+    printf("4 - Setas\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
     printf("D - Desenho a definir\n");
     printf("* - Desenho a definir\n");
@@ -373,6 +404,27 @@ void animacao_helen(){
     sleep_ms(500);              
     desenho_pio(coracao5, 5);  
 }
+
+// Animação das Setas
+void animacao_Lucas(){
+
+    desenho_pio(setas1, 1);  
+    sleep_ms(500);   
+    Tocar_piscando();           
+    desenho_pio(setas3, 2);  
+    sleep_ms(500);    
+    Tocar_piscando();          
+    desenho_pio(setas4, 3);  
+    sleep_ms(500);    
+    Tocar_piscando();          
+    desenho_pio(setas5, 4);  
+    sleep_ms(500);     
+    Tocar_piscando();         
+    desenho_pio(setas2, 3); 
+    sleep_ms(500);        
+    Tocar_piscando();      
+        
+    }
 
 //função principal
 int main() {
@@ -455,7 +507,7 @@ int main() {
             break;
 
             case '4':  // Animação do Lucas
-                // Adiconar rotina aqui.
+                animacao_Lucas();
                 printf("Animação do botão 4 foi acionada.\n");
             break;
 
