@@ -82,12 +82,23 @@ double coracao2[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
                        0.0, 1.0, 0.5, 1.0, 0.0,
                        0.0, 0.0, 1.0, 0.0, 0.0};
 
-double coracao3[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.0, 0.0, 
-                        0.0, 0.0, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.0, 0.0,
-                        0.0, 0.0, 0.0, 0.0, 0.0}; 
+double coracao3[25] =  {0.3, 1.0, 0.3, 1.0, 0.3,
+                        0.3, 1.0, 1.0, 1.0, 0.3, 
+                        0.3, 1.0, 1.0, 1.0, 0.3,
+                        0.3, 0.0, 0.0, 0.0, 0.3,
+                        0.3, 0.3, 1.0, 0.3, 0.3};
 
+double coracao4[25] =  {1.0, 1.0, 0.0, 1.0, 1.0,
+                        1.0, 0.0, 1.0, 0.0, 1.0, 
+                        0.0, 1.0, 0.0, 1.0, 0.0,
+                        0.0, 0.0, 1.0, 0.0, 0.0,
+                        0.0, 0.0, 0.0, 0.8, 0.8,};
+
+double coracao5[25] =  {0.5, 0.7, 0.5, 0.7, 0.5,
+                        0.7, 0.0, 0.7, 0.0, 0.7, 
+                        0.7, 0.0, 0.5, 0.0, 0.7,
+                        0.0, 0.7, 0.5, 0.7, 0.0,
+                        0.5, 0.5, 0.7, 0.5, 0.5,};                      
 
 
 // Função para tocar uma nota específica
@@ -240,6 +251,7 @@ void menu() {
     printf("\nMenu de Opcoes:\n");
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Carinha Feliz Piscando\n");
+    printf("2 - Coracão Piscando\n");
     printf("A - Desenho a definir\n");
     printf("B - Desenho a definir\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
@@ -270,7 +282,17 @@ void animação_mariana(int n) {
     desenho_pio(carinha_feliz_piscando_2, n);
 }
 
-void animacao_Helen()
+void animacao_Helen(int n){
+    desenho_pio(coracao1, 1);  
+    sleep_ms(500);              // Aguarda meio segundo
+    desenho_pio(coracao2, 5);  // Azul
+    sleep_ms(500);              // Aguarda meio segundo
+    desenho_pio(coracao3, 3);  // Verde
+    sleep_ms(500);              // Aguarda meio segundo
+    desenho_pio(coracao4, 4);  // Ciano
+    sleep_ms(500);              // Aguarda meio segundo
+    desenho_pio(coracao5, 7);  // Branco
+}
 
 //função principal
 int main() {
