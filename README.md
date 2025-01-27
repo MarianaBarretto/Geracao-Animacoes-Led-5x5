@@ -82,7 +82,7 @@
 
 <h2>Imagem</h2>
    
-  ![projeto](https://github.com/user-attachments/assets/be11d601-343a-49a1-b04c-38634f7452c8)
+  ![projeto](https://github.com/MarianaBarretto/Geracao-Animacoes-Led-5x5/blob/feature/estrutura-codigo/imagem.jpg)
 
   <h2>Definições de Teclas</h2>
 <p>A interação com o sistema é feita através de um teclado matricial com as seguintes definições de teclas:</p>
