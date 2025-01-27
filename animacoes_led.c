@@ -562,6 +562,49 @@ void animação_daniel(int n) {
     sleep_ms(400);
     
 }
+
+void animacao_ylo(uint16_t ciclos, uint16_t delay_ms) {
+    const double circulo[5][25] = {
+        {0.0, 0.0, 1.0, 0.0, 0.0,
+         0.0, 1.0, 0.0, 1.0, 0.0,
+         1.0, 0.0, 0.0, 0.0, 1.0,
+         0.0, 1.0, 0.0, 1.0, 0.0,
+         0.0, 0.0, 1.0, 0.0, 0.0},
+
+        {0.0, 1.0, 1.0, 1.0, 0.0,
+         1.0, 0.0, 0.0, 0.0, 1.0,
+         1.0, 0.0, 0.0, 0.0, 1.0,
+         1.0, 0.0, 0.0, 0.0, 1.0,
+         0.0, 1.0, 1.0, 1.0, 0.0},
+
+        {1.0, 1.0, 1.0, 1.0, 1.0,
+         1.0, 0.0, 0.0, 0.0, 1.0,
+         1.0, 0.0, 0.0, 0.0, 1.0,
+         1.0, 0.0, 0.0, 0.0, 1.0,
+         1.0, 1.0, 1.0, 1.0, 1.0},
+
+        {0.5, 0.5, 0.5, 0.5, 0.5,
+         0.5, 0.0, 0.0, 0.0, 0.5,
+         0.5, 0.0, 0.0, 0.0, 0.5,
+         0.5, 0.0, 0.0, 0.0, 0.5,
+         0.5, 0.5, 0.5, 0.5, 0.5},
+
+        {0.2, 0.2, 0.2, 0.2, 0.2,
+         0.2, 0.0, 0.0, 0.0, 0.2,
+         0.2, 0.0, 0.0, 0.0, 0.2,
+         0.2, 0.0, 0.0, 0.0, 0.2,
+         0.2, 0.2, 0.2, 0.2, 0.2}
+    };
+
+    for (uint16_t ciclo = 0; ciclo < ciclos; ciclo++) {
+        for (uint16_t frame = 0; frame < 5; frame++) {
+            desenho_pio((double *)circulo[frame], (frame % 7) + 1); // Alterna cores entre as disponíveis
+            sleep_ms(delay_ms);
+        }
+    }
+    printf("Animação 'Círculo Giratório' finalizada após %d ciclos.\n", ciclos);
+}
+
 // Função para converter a posição do matriz para uma posição do vetor.
 int getIndex(int x, int y) {
     // Se a linha for par (0, 2, 4), percorremos da esquerda para a direita.
@@ -681,7 +724,7 @@ int main() {
             break;
 
             case '9':  // Animação do Ylo
-                // Adiconar rotina aqui.
+                animacao_ylo(3, 150); // 3 ciclos com 150 ms entre frames
                 printf("Animação do botão 9 foi acionada.\n");
             break;
 
