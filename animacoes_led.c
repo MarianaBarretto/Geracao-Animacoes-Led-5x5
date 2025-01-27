@@ -202,6 +202,36 @@ double desenhar_quadrado_A3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
                                    1.0, 0.0, 0.0, 0.0, 1.0,          
                                    1.0, 1.0, 1.0, 1.0, 1.0};                  
 
+
+//Animação 6
+    double raio [25] =      {0.0, 0.0, 0.0, 1.0, 0.0,
+                            0.0, 0.0, 1.0, 0.0, 0.0,
+                            0.0, 1.0, 1.0, 1.0, 1.0,
+                            0.0, 0.0, 1.0, 0.0, 0.0,
+                            0.0, 0.0, 0.0, 0.0, 1.0};
+double carinha_triste[25] = {1.0, 1.0, 0.0, 1.0, 1.0,
+                             1.0, 1.0, 0.0, 1.0, 1.0, 
+                            0.0, 0.0, 0.0, 1.0, 0.0,
+                             0.0, 1.0, 1.0, 1.0, 0.0,
+                            1.0, 0.0, 0.0, 0.0, 1.0};
+
+double fogo_pequeno[25] =   {0.0, 0.0, 1.0, 0.0, 0.0, 
+                            0.0, 1.0, 1.0, 1.0, 0.0, 
+                            0.0, 1.0, 1.0, 1.0, 0.0, 
+                            0.0, 0.0, 1.0, 0.0, 0.0,
+                             0.0, 0.0, 0.0, 0.0, 0.0};
+double fogo_medio[25] =     {0.0, 1.0, 1.0, 1.0, 0.0,
+                            1.0, 1.0, 1.0, 1.0, 1.0,
+                            1.0, 1.0, 1.0, 1.0, 1.0,
+                            0.0, 1.0, 1.0, 1.0, 0.0,
+                            0.0, 0.0, 1.0, 0.0, 0.0};
+double carinha_alegre[25] = {1.0, 1.0, 0.0, 1.0, 1.0,
+                            1.0, 1.0, 0.0, 1.0, 1.0,
+                            0.0, 0.0, 1.0, 0.0, 0.0,
+                            1.0, 1.0, 1.0, 1.0, 1.0,
+                            0.0, 1.0, 1.0, 1.0, 0.0};
+
+
 // Função para tocar uma nota específica
 void Tocar_nota(int nota, int duracao_ms) {
     int periodo = 1000000 / nota; // Calcula o período da onda (em microssegundos)
@@ -429,6 +459,7 @@ void menu() {
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Seta para Cima, Seta para Baixo, Carinha Feliz, Letra T e Letra M\n");
     printf("2 - Coracão Piscando\n"); 
+    printf("6 - Rosto triste para alegre\n"); 
     printf("7 - Quadrado Crescente\n");  
     printf("4 - Setas\n");
     printf("B - Desenho a definir\n");
@@ -518,6 +549,19 @@ void animacao_Lucas(){
 
     }
 
+void animação_daniel(int n) {
+    desenho_pio(raio, n+3);
+    sleep_ms(400);
+    desenho_pio(carinha_triste, n+4);
+    sleep_ms(400);                
+    desenho_pio(fogo_pequeno, n+1);
+    sleep_ms(400);
+    desenho_pio(fogo_medio, n+1);
+    sleep_ms(400);                
+    desenho_pio(carinha_alegre, n+1);
+    sleep_ms(400);
+    
+}
 // Função para converter a posição do matriz para uma posição do vetor.
 int getIndex(int x, int y) {
     // Se a linha for par (0, 2, 4), percorremos da esquerda para a direita.
@@ -620,7 +664,7 @@ int main() {
             break;
 
             case '6':  // Animação do Daniel
-                // Adiconar rotina aqui.
+                animação_daniel(1); 
                 printf("Animação do botão 6 foi acionada.\n");
             break;
 
