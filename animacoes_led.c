@@ -335,7 +335,7 @@ void init_keypad() {
 void menu() {
     printf("\nMenu de Opcoes:\n");
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
-    printf("1 - Carinha Feliz Piscando\n");
+    printf("1 - Seta para Cima, Seta para Baixo, Carinha Feliz, Letra T e Letra M\n");
     printf("2 - Coracão Piscando\n");    
     printf("A - Desenho a definir\n");
     printf("B - Desenho a definir\n");
