@@ -52,21 +52,35 @@ char KEY_MAP[16] = {
 //Vetores de imagens - Valores devem variar de 0 a 1 (de acordo com a porcentagem de intensidade)
 
 //Animação 1
-double carinha_feliz_piscando[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                       0.0, 1.0, 0.0, 1.0, 0.0, 
-                                       0.0, 0.0, 0.0, 0.0, 0.0,
-                                       1.0, 0.0, 0.0, 0.0, 1.0,
-                                       0.0, 1.0, 1.0, 1.0, 0.0};
-double carinha_feliz_piscando_1[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
-                                         0.0, 0.0, 0.0, 1.0, 0.0, 
-                                         0.0, 0.0, 0.0, 0.0, 0.0,
-                                         1.0, 0.0, 0.0, 0.0, 1.0,
-                                         0.0, 1.0, 1.0, 1.0, 0.0};
-double carinha_feliz_piscando_2[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
-                                        0.0, 0.0, 0.0, 0.0, 0.0, 
-                                        0.0, 0.0, 0.0, 0.0, 0.0,
-                                        0.0, 0.0, 0.0, 0.0, 0.0,
-                                        0.0, 0.0, 0.0, 0.0, 0.0};                                                                                                                                  
+double seta_1[25] =   {0.0, 0.0, 1.0, 0.0, 0.0,
+                       0.0, 1.0, 1.0, 1.0, 0.0, 
+                       1.0, 1.0, 1.0, 1.0, 1.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0};
+
+double seta_2[25] =   {0.0, 0.0, 1.0, 0.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0, 
+                       1.0, 1.0, 1.0, 1.0, 1.0,
+                       0.0, 1.0, 1.0, 1.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0, 0.0};
+
+double carinha_feliz[25] =  {0.0, 0.0, 0.0, 0.0, 0.0,
+                             0.0, 1.0, 0.0, 1.0, 0.0, 
+                             0.0, 0.0, 0.0, 0.0, 0.0,
+                             1.0, 0.0, 0.0, 0.0, 1.0,
+                             0.0, 1.0, 1.0, 1.0, 0.0};
+
+double letra_t[25] =   {1.0, 1.0, 1.0, 1.0, 1.0,
+                        0.0, 0.0, 1.0, 0.0, 0.0, 
+                        0.0, 0.0, 1.0, 0.0, 0.0,
+                        0.0, 0.0, 1.0, 0.0, 0.0,
+                        0.0, 0.0, 1.0, 0.0, 0.0};
+
+double letra_m[25] =   {1.0, 0.0, 0.0, 0.0, 1.0,
+                        1.0, 1.0, 0.0, 1.0, 1.0, 
+                        1.0, 0.0, 1.0, 0.0, 1.0,
+                        1.0, 0.0, 0.0, 0.0, 1.0,
+                        1.0, 0.0, 0.0, 0.0, 1.0};
                    
 double coracao1[25] = {0.0, 1.0, 0.0, 1.0, 0.0,
                        1.0, 0.0, 1.0, 0.0, 1.0, 
@@ -144,8 +158,8 @@ void Tocar_melodia() {
     }
 }
 
-// Função para tocar uma melodia
-void Tocar_piscando() {
+// Função para tocar apagando
+void Tocar_apagando() {
     // Melodia (sequência de notas e duração em ms)
     int melodia[][2] = {
         {DO, 400}
@@ -322,8 +336,7 @@ void menu() {
     printf("\nMenu de Opcoes:\n");
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Carinha Feliz Piscando\n");
-    printf("2 - Coracão Piscando\n");
-    printf("8 - Pong ATARI 1972\n");
+    printf("2 - Coracão Piscando\n");    
     printf("A - Desenho a definir\n");
     printf("B - Desenho a definir\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
@@ -342,25 +355,27 @@ void desligar_leds(){
 }
 
 void animação_mariana(int n) {
-    desenho_pio(carinha_feliz_piscando, n);
-    sleep_ms(400);
-    Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, n);
-    sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, n);
-    sleep_ms(400);
-    Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, n);
-    sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, n);
-    sleep_ms(400);
-    Tocar_piscando(); // Toca o barulhinho piscando
-    desenho_pio(carinha_feliz_piscando_1, n);
-    sleep_ms(400);                
-    desenho_pio(carinha_feliz_piscando, n);
-    sleep_ms(400);
-    Tocar_piscando(); // Toca o barulhinho piscando                
-    desenho_pio(carinha_feliz_piscando_2, n);
+    desenho_pio(seta_1, n);
+    sleep_ms(600);
+    Tocar_apagando(); 
+    desenho_pio(leds_desligados, n);
+    sleep_ms(100);
+    desenho_pio(seta_2, n);
+    sleep_ms(600);
+    Tocar_apagando();
+    desenho_pio(leds_desligados, n);
+    sleep_ms(100);                 
+    desenho_pio(carinha_feliz, n);
+    sleep_ms(600);
+    Tocar_apagando(); 
+    desenho_pio(leds_desligados, n);
+    sleep_ms(100);
+    desenho_pio(letra_t, n);
+    sleep_ms(600);
+    desenho_pio(leds_desligados, n);
+    sleep_ms(100);
+    Tocar_apagando();                
+    desenho_pio(letra_m, n);    
 }
 
 void animacao_helen(){
@@ -374,6 +389,7 @@ void animacao_helen(){
     sleep_ms(500);              
     desenho_pio(coracao5, 5);  
 }
+
 // Função para converter a posição do matriz para uma posição do vetor.
 int getIndex(int x, int y) {
     // Se a linha for par (0, 2, 4), percorremos da esquerda para a direita.
@@ -384,161 +400,6 @@ int getIndex(int x, int y) {
         return 24-(y * 5 + (4 - x)); // Linha ímpar (direita para esquerda).
     }
 }
-void animacaoPONG_ISRAELFALCAO(){
-
-     while (true) {
-    int matriz [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz[coluna][linha][0], matriz[coluna][linha][1], matriz[coluna][linha][2]);
-    }
-  }
-    npWrite(); 
-    sleep_ms(1000);
-    npClear();
-
-    int matriz2 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz2[coluna][linha][0], matriz2[coluna][linha][1], matriz2[coluna][linha][2]);
-    }
-  }
-       
-    npWrite();
-    sleep_ms(1500);
-    npClear();
-  }
-}
-
-int matriz3 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz3[coluna][linha][0], matriz3[coluna][linha][1], matriz3[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1000);
-      npClear();
-
-  int matriz4 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-    
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz4[coluna][linha][0], matriz4[coluna][linha][1], matriz4[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1000);
-      npClear();
-
-  int matriz5 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz5[coluna][linha][0], matriz5[coluna][linha][1], matriz5[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1000);
-      npClear();
-
-      int matriz6 [5][5][3] = {
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz6[coluna][linha][0], matriz6[coluna][linha][1], matriz6[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1000);
-      npClear();
-
-      int matriz7 [5][5][3] = {
-    {{0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz7[coluna][linha][0], matriz7[coluna][linha][1], matriz7[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1000);
-      npClear();
-
-      int matriz8 [5][5][3] = {
-    {{0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{0, 0, 0}, {0, 0, 255}, {0, 0, 255}, {0, 0, 255}, {0, 0, 0}}
-};
-   
-    for(int linha = 0; linha < 5; linha++){
-    for(int coluna = 0; coluna < 5; coluna++){
-      int posicao = getIndex(linha, coluna);
-      npSetLED(posicao, matriz8[coluna][linha][0], matriz8[coluna][linha][1], matriz8[coluna][linha][2]);
-    }
-  }
-
-      npWrite();
-      sleep_ms(1000);
 
 //função principal
 int main() {
@@ -606,7 +467,7 @@ int main() {
             break;
             
             case '1':  // Animação da Mariana
-                animação_mariana(6); // Adiconada a rotina aqui
+                animação_mariana(5); // Adiconada a rotina aqui
                 printf("Animação do botão 1 foi acionada.\n");
             break;
 
@@ -641,7 +502,7 @@ int main() {
             break;
 
             case '8':  // Animação do Israel
-                animacaoPONG_ISRAELFALCAO();
+                // Adiconar rotina aqui.
                 printf("Animação do botão 8 foi acionada.\n");
             break;
 
