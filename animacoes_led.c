@@ -126,7 +126,49 @@ double leds_desligados[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                               0.0, 0.0, 0.0, 0.0, 0.0, 
                               0.0, 0.0, 0.0, 0.0, 0.0,         
                               0.0, 0.0, 0.0, 0.0, 0.0,          
-                              0.0, 0.0, 0.0, 0.0, 0.0};                     
+                              0.0, 0.0, 0.0, 0.0, 0.0};    
+
+// ANIMAÇÃO QUADRADO CRESCENTE - VERMELHO
+double desenhar_quadrado_V1[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
+                                  0.0, 0.0, 0.0, 0.0, 0.0, 
+                                  0.0, 0.0, 1.0, 0.0, 0.0,         
+                                  0.0, 0.0, 0.0, 0.0, 0.0,          
+                                  0.0, 0.0, 0.0, 0.0, 0.0};  
+
+                              
+double desenhar_quadrado_V2[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
+                                  0.0, 1.0, 1.0, 1.0, 0.0, 
+                                  0.0, 1.0, 0.0, 1.0, 0.0,         
+                                  0.0, 1.0, 1.0, 1.0, 0.0,          
+                                  0.0, 0.0, 0.0, 0.0, 0.0}; 
+
+ 
+double desenhar_quadrado_V3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
+                                   1.0, 0.0, 0.0, 0.0, 1.0, 
+                                   1.0, 0.0, 0.0, 0.0, 1.0,         
+                                   1.0, 0.0, 0.0, 0.0, 1.0,          
+                                   1.0, 1.0, 1.0, 1.0, 1.0}; 
+
+// ANIMAÇÃO QUADRADO CRESCENTE - AZUL
+double desenhar_quadrado_A1[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
+                                  0.0, 0.0, 0.0, 0.0, 0.0, 
+                                  0.0, 0.0, 1.0, 0.0, 0.0,         
+                                  0.0, 0.0, 0.0, 0.0, 0.0,          
+                                  0.0, 0.0, 0.0, 0.0, 0.0};  
+
+                              
+double desenhar_quadrado_A2[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
+                                  0.0, 1.0, 1.0, 1.0, 0.0, 
+                                  0.0, 1.0, 0.0, 1.0, 0.0,         
+                                  0.0, 1.0, 1.0, 1.0, 0.0,          
+                                  0.0, 0.0, 0.0, 0.0, 0.0}; 
+
+ 
+double desenhar_quadrado_A3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
+                                   1.0, 0.0, 0.0, 0.0, 1.0, 
+                                   1.0, 0.0, 0.0, 0.0, 1.0,         
+                                   1.0, 0.0, 0.0, 0.0, 1.0,          
+                                   1.0, 1.0, 1.0, 1.0, 1.0};                  
 
 // Função para tocar uma nota específica
 void Tocar_nota(int nota, int duracao_ms) {
@@ -336,7 +378,8 @@ void menu() {
     printf("\nMenu de Opcoes:\n");
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
     printf("1 - Seta para Cima, Seta para Baixo, Carinha Feliz, Letra T e Letra M\n");
-    printf("2 - Coracão Piscando\n");    
+    printf("2 - Coracão Piscando\n"); 
+    printf("7 - Quadrado Crescente\n");  
     printf("A - Desenho a definir\n");
     printf("B - Desenho a definir\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
@@ -354,6 +397,20 @@ void desligar_leds(){
     desenho_pio(leds_desligados, 0);
 }
 
+void animação_alexandro(int n) {
+    desenho_pio(desenhar_quadrado_V1, n);
+    sleep_ms(350);
+    desenho_pio(desenhar_quadrado_V2, n);
+    sleep_ms(350);
+    desenho_pio(desenhar_quadrado_V3, n);
+    sleep_ms(350);
+    desenho_pio(desenhar_quadrado_A1, n);
+    sleep_ms(350);
+    desenho_pio(desenhar_quadrado_A2, n);
+    sleep_ms(350);
+    desenho_pio(desenhar_quadrado_A3, n);
+    sleep_ms(350);
+}
 void animação_mariana(int n) {
     desenho_pio(seta_1, n);
     sleep_ms(600);
@@ -497,8 +554,10 @@ int main() {
             break;
 
             case '7':  // Animação do Alexandro
-                // Adiconar rotina aqui.
+                animação_alexandro(3); // Adiconada a rotina aqui 
+                animação_alexandro(5); // Adiconada a rotina aqui
                 printf("Animação do botão 7 foi acionada.\n");
+            
             break;
 
             case '8':  // Animação do Israel
