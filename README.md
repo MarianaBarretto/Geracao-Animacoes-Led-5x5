@@ -18,7 +18,7 @@
         <td>Alexandro Soares</td>
     </tr>
    <tr>
-        <td> README.md</td>
+        <td> README.md e uma animação</td>
         <td>Ylo Bittencourt</td>
     </tr>
         <tr>
@@ -132,6 +132,31 @@
       <td>3</td>
       <td>Ondas Coloridas</td>
       </tr>
+    <tr>
+      <td>4</td>
+      <td>Setas</td>
+      </tr>
+    <tr>
+      <td>5</td>
+      <td> </td>
+      </tr>
+    <tr>
+      <td>6</td>
+      <td>Rosto triste para alegre</td>
+      </tr>
+    <tr>
+      <td>7</td>
+      <td>Quadrado Crescente</td>
+      </tr>
+    <tr>
+      <td>8</td>
+      <td></td>
+      </tr>
+    <tr>
+      <td>9</td>
+      <td>Circulo Giratório</td>
+      </tr>
+    
   </tbody>
 </table>
 

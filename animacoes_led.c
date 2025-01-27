@@ -461,6 +461,7 @@ void menu() {
     printf("2 - Coracão Piscando\n"); 
     printf("6 - Rosto triste para alegre\n"); 
     printf("7 - Quadrado Crescente\n");  
+    printf("9 - Circulo Giratório\n");
     printf("4 - Setas\n");
     printf("B - Desenho a definir\n");
     printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
