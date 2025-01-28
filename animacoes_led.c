@@ -652,6 +652,29 @@ void animacao_edna() {
     sleep_ms(200);
 }
 
+// Sequência de notas para a explosão da animação 5
+void explosao() {
+    // Parte 1: Crescendo (aumento rápido de frequência)
+    Tocar_nota(220, 50); // Lá2 (grave)
+    Tocar_nota(330, 50); // Mi3
+    Tocar_nota(440, 50); // Lá3
+    Tocar_nota(660, 50); // Mi4
+    Tocar_nota(880, 50); // Lá4
+
+    // Parte 2: Estouro (alta frequência, curta duração)
+    Tocar_nota(1000, 20); // Frequência alta para representar o pico
+    Tocar_nota(1200, 20);
+    Tocar_nota(1400, 20);
+
+    // Parte 3: Decaimento (queda abrupta de frequência)
+    Tocar_nota(880, 100); // Lá4
+    Tocar_nota(440, 100); // Lá3
+    Tocar_nota(220, 150); // Lá2 (grave, representando o eco da explosão)
+
+    // Parte 4: Grave e longo (ressonância final)
+    Tocar_nota(110, 300); // Lá1 (grave e longo para o final)
+}
+
 // Função para converter a posição do matriz para uma posição do vetor.
 int getIndex(int x, int y) {
     // Se a linha for par (0, 2, 4), percorremos da esquerda para a direita.
@@ -750,7 +773,9 @@ int main() {
 
             case '5':  // Animação da Edna
                 animacao_edna();
+                explosao();
                 animacao_edna();
+                explosao();
                 printf("Animação do botão 5 foi acionada.\n");
             break;
 
@@ -768,7 +793,7 @@ int main() {
 
             case '8':  // Animação do Israel
                 // Adiconar rotina aqui.
-                printf("Animação do botão 8 foi acionada.\n");
+                printf("Animação do botão 8 não foi acionada.\n");
             break;
 
             case '9':  // Animação do Ylo
