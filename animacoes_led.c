@@ -143,7 +143,6 @@ double setas5[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
                               0.0, 0.0, 1.0, 1.0, 0.0,
                               0.0, 0.0, 1.0, 0.0, 0.0}; 
 
-
 // ADICIONE SUAS IMAGENS  
 
 // DESENHO PARA AS LEDs BRANCAS COM 20% DE INTENSIDADE
@@ -166,14 +165,12 @@ double desenhar_quadrado_V1[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                                   0.0, 0.0, 1.0, 0.0, 0.0,         
                                   0.0, 0.0, 0.0, 0.0, 0.0,          
                                   0.0, 0.0, 0.0, 0.0, 0.0};  
-
-                              
+                             
 double desenhar_quadrado_V2[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                                   0.0, 1.0, 1.0, 1.0, 0.0, 
                                   0.0, 1.0, 0.0, 1.0, 0.0,         
                                   0.0, 1.0, 1.0, 1.0, 0.0,          
                                   0.0, 0.0, 0.0, 0.0, 0.0}; 
-
  
 double desenhar_quadrado_V3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
                                    1.0, 0.0, 0.0, 0.0, 1.0, 
@@ -187,14 +184,12 @@ double desenhar_quadrado_A1[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                                   0.0, 0.0, 1.0, 0.0, 0.0,         
                                   0.0, 0.0, 0.0, 0.0, 0.0,          
                                   0.0, 0.0, 0.0, 0.0, 0.0};  
-
                               
 double desenhar_quadrado_A2[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                                   0.0, 1.0, 1.0, 1.0, 0.0, 
                                   0.0, 1.0, 0.0, 1.0, 0.0,         
                                   0.0, 1.0, 1.0, 1.0, 0.0,          
                                   0.0, 0.0, 0.0, 0.0, 0.0}; 
-
  
 double desenhar_quadrado_A3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
                                    1.0, 0.0, 0.0, 0.0, 1.0, 
@@ -202,13 +197,13 @@ double desenhar_quadrado_A3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
                                    1.0, 0.0, 0.0, 0.0, 1.0,          
                                    1.0, 1.0, 1.0, 1.0, 1.0};                  
 
-
 //Animação 6
-    double raio [25] =      {0.0, 0.0, 0.0, 1.0, 0.0,
+double raio [25] =            {0.0, 0.0, 0.0, 1.0, 0.0,
                             0.0, 0.0, 1.0, 0.0, 0.0,
                             0.0, 1.0, 1.0, 1.0, 1.0,
                             0.0, 0.0, 1.0, 0.0, 0.0,
                             0.0, 0.0, 0.0, 0.0, 1.0};
+
 double carinha_triste[25] = {1.0, 1.0, 0.0, 1.0, 1.0,
                              1.0, 1.0, 0.0, 1.0, 1.0, 
                             0.0, 0.0, 0.0, 1.0, 0.0,
@@ -220,11 +215,13 @@ double fogo_pequeno[25] =   {0.0, 0.0, 1.0, 0.0, 0.0,
                             0.0, 1.0, 1.0, 1.0, 0.0, 
                             0.0, 0.0, 1.0, 0.0, 0.0,
                              0.0, 0.0, 0.0, 0.0, 0.0};
+
 double fogo_medio[25] =     {0.0, 1.0, 1.0, 1.0, 0.0,
                             1.0, 1.0, 1.0, 1.0, 1.0,
                             1.0, 1.0, 1.0, 1.0, 1.0,
                             0.0, 1.0, 1.0, 1.0, 0.0,
                             0.0, 0.0, 1.0, 0.0, 0.0};
+
 double carinha_alegre[25] = {1.0, 1.0, 0.0, 1.0, 1.0,
                             1.0, 1.0, 0.0, 1.0, 1.0,
                             0.0, 0.0, 1.0, 0.0, 0.0,
@@ -457,17 +454,23 @@ void init_keypad() {
 void menu() {
     printf("\nMenu de Opcoes:\n");
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
+    printf("A - Desliga todos os LEDs\n");
+    printf("B - Liga todos os LEDs em azul a 100%%\n");
+    printf("C - Liga todos os LEDs em vermelho a 80%%\n");
+    printf("D - Liga todos os LEDs em verde a 50%%\n");
+    printf("# - Liga todos os LEDs em branco a 20%%\n");
+    printf("* - Inicia reboot do código\n");
+    printf("0 - Melodia\n");
     printf("1 - Seta para Cima, Seta para Baixo, Carinha Feliz, Letra T e Letra M\n");
     printf("2 - Coracão Piscando\n"); 
-    printf("6 - Rosto triste para alegre\n"); 
-    printf("7 - Quadrado Crescente\n");  
-    printf("9 - Circulo Giratório\n");
+    printf("3 - Ondas Coloridas\n");
     printf("4 - Setas\n");
-    printf("B - Desenho a definir\n");
-    printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
-    printf("D - Desenho a definir\n");
-    printf("* - Desenho a definir\n");
-    printf("# - LEDs \n");
+    printf("5 - Super Nova\n");
+    printf("6 - Rosto triste para alegre\n"); 
+    printf("7 - Quadrado Crescente\n"); 
+    printf("8 - Animacao Indisponivel\n"); 
+    printf("9 - Circulo Giratório\n");
+
 }
 
 // Função para ligar LEDs brancas com 20% de intensidade
@@ -493,6 +496,7 @@ void animação_alexandro(int n) {
     desenho_pio(desenhar_quadrado_A3, n);
     sleep_ms(350);
 }
+
 void animação_mariana(int n) {
     desenho_pio(seta_1, n);
     sleep_ms(600);
@@ -604,6 +608,10 @@ void animacao_ylo(uint16_t ciclos, uint16_t delay_ms) {
         }
     }
     printf("Animação 'Círculo Giratório' finalizada após %d ciclos.\n", ciclos);
+}
+
+void animacao_edna() {
+    desenho_pio();
 }
 
 // Função para converter a posição do matriz para uma posição do vetor.
