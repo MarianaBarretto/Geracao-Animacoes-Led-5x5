@@ -143,7 +143,37 @@ double setas5[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
                               0.0, 0.0, 1.0, 1.0, 0.0,
                               0.0, 0.0, 1.0, 0.0, 0.0}; 
 
-// ADICIONE SUAS IMAGENS  
+// Animação 5
+double frame1[25] = {   0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0,
+                        0, 0, 1, 0, 0,
+                        0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0};
+
+double frame2[25] = {   0, 0, 0, 0, 0,
+                        0, 0, 1, 0, 0,
+                        0, 1, 0, 1, 0,
+                        0, 0, 1, 0, 0,
+                        0, 0, 0, 0, 0};
+
+double frame3[25] = {   0, 0, 1, 0, 0,  
+                        0, 1, 0, 1, 0,
+                        1, 0, 0, 0, 1,
+                        0, 1, 0, 1, 0,
+                        0, 0, 1, 0, 0};
+
+double frame4[25] = {   0, 1, 0, 1, 0,
+                        1, 0, 0, 0, 1,
+                        0, 0, 0, 0, 0,
+                        1, 0, 0, 0, 1,
+                        0, 1, 0, 1, 0};
+
+double frame5[25] = {   1, 0, 1, 0, 1,
+                        0, 1, 1, 1, 0,
+                        1, 0, 1, 0, 1,
+                        0, 1, 1, 1, 0,
+                        1, 0, 1, 0, 1};
+
 
 // DESENHO PARA AS LEDs BRANCAS COM 20% DE INTENSIDADE
 double leds_cor_branca[25] = {0.2, 0.2, 0.2, 0.2, 0.2,
@@ -470,7 +500,6 @@ void menu() {
     printf("7 - Quadrado Crescente\n"); 
     printf("8 - Animacao Indisponivel\n"); 
     printf("9 - Circulo Giratório\n");
-
 }
 
 // Função para ligar LEDs brancas com 20% de intensidade
@@ -611,7 +640,16 @@ void animacao_ylo(uint16_t ciclos, uint16_t delay_ms) {
 }
 
 void animacao_edna() {
-    desenho_pio();
+    desenho_pio(frame1, 4);
+    sleep_ms(200);
+    desenho_pio(frame2, 4);
+    sleep_ms(200);
+    desenho_pio(frame3, 4);
+    sleep_ms(200);
+    desenho_pio(frame4, 4);
+    sleep_ms(200);
+    desenho_pio(frame5, 1);
+    sleep_ms(200);
 }
 
 // Função para converter a posição do matriz para uma posição do vetor.
@@ -711,7 +749,8 @@ int main() {
             break;
 
             case '5':  // Animação da Edna
-                // Adiconar rotina aqui.
+                animacao_edna();
+                animacao_edna();
                 printf("Animação do botão 5 foi acionada.\n");
             break;
 
