@@ -143,8 +143,37 @@ double setas5[25] = {         0.0, 0.0, 1.0, 0.0, 0.0,
                               0.0, 0.0, 1.0, 1.0, 0.0,
                               0.0, 0.0, 1.0, 0.0, 0.0}; 
 
+// Animação 5
+double frame1[25] = {   0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0,
+                        0, 0, 1, 0, 0,
+                        0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0};
 
-// ADICIONE SUAS IMAGENS  
+double frame2[25] = {   0, 0, 0, 0, 0,
+                        0, 0, 1, 0, 0,
+                        0, 1, 0, 1, 0,
+                        0, 0, 1, 0, 0,
+                        0, 0, 0, 0, 0};
+
+double frame3[25] = {   0, 0, 1, 0, 0,  
+                        0, 1, 0, 1, 0,
+                        1, 0, 0, 0, 1,
+                        0, 1, 0, 1, 0,
+                        0, 0, 1, 0, 0};
+
+double frame4[25] = {   0, 1, 0, 1, 0,
+                        1, 0, 0, 0, 1,
+                        0, 0, 0, 0, 0,
+                        1, 0, 0, 0, 1,
+                        0, 1, 0, 1, 0};
+
+double frame5[25] = {   1, 0, 1, 0, 1,
+                        0, 1, 1, 1, 0,
+                        1, 0, 1, 0, 1,
+                        0, 1, 1, 1, 0,
+                        1, 0, 1, 0, 1};
+
 
 // DESENHO PARA AS LEDs BRANCAS COM 20% DE INTENSIDADE
 double leds_cor_branca[25] = {0.2, 0.2, 0.2, 0.2, 0.2,
@@ -166,14 +195,12 @@ double desenhar_quadrado_V1[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                                   0.0, 0.0, 1.0, 0.0, 0.0,         
                                   0.0, 0.0, 0.0, 0.0, 0.0,          
                                   0.0, 0.0, 0.0, 0.0, 0.0};  
-
-                              
+                             
 double desenhar_quadrado_V2[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                                   0.0, 1.0, 1.0, 1.0, 0.0, 
                                   0.0, 1.0, 0.0, 1.0, 0.0,         
                                   0.0, 1.0, 1.0, 1.0, 0.0,          
                                   0.0, 0.0, 0.0, 0.0, 0.0}; 
-
  
 double desenhar_quadrado_V3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
                                    1.0, 0.0, 0.0, 0.0, 1.0, 
@@ -187,14 +214,12 @@ double desenhar_quadrado_A1[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                                   0.0, 0.0, 1.0, 0.0, 0.0,         
                                   0.0, 0.0, 0.0, 0.0, 0.0,          
                                   0.0, 0.0, 0.0, 0.0, 0.0};  
-
                               
 double desenhar_quadrado_A2[25] = {0.0, 0.0, 0.0, 0.0, 0.0,
                                   0.0, 1.0, 1.0, 1.0, 0.0, 
                                   0.0, 1.0, 0.0, 1.0, 0.0,         
                                   0.0, 1.0, 1.0, 1.0, 0.0,          
                                   0.0, 0.0, 0.0, 0.0, 0.0}; 
-
  
 double desenhar_quadrado_A3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
                                    1.0, 0.0, 0.0, 0.0, 1.0, 
@@ -202,13 +227,13 @@ double desenhar_quadrado_A3[25] = {1.0, 1.0, 1.0, 1.0, 1.0,
                                    1.0, 0.0, 0.0, 0.0, 1.0,          
                                    1.0, 1.0, 1.0, 1.0, 1.0};                  
 
-
 //Animação 6
-    double raio [25] =      {0.0, 0.0, 0.0, 1.0, 0.0,
+double raio [25] =            {0.0, 0.0, 0.0, 1.0, 0.0,
                             0.0, 0.0, 1.0, 0.0, 0.0,
                             0.0, 1.0, 1.0, 1.0, 1.0,
                             0.0, 0.0, 1.0, 0.0, 0.0,
                             0.0, 0.0, 0.0, 0.0, 1.0};
+
 double carinha_triste[25] = {1.0, 1.0, 0.0, 1.0, 1.0,
                              1.0, 1.0, 0.0, 1.0, 1.0, 
                             0.0, 0.0, 0.0, 1.0, 0.0,
@@ -220,11 +245,13 @@ double fogo_pequeno[25] =   {0.0, 0.0, 1.0, 0.0, 0.0,
                             0.0, 1.0, 1.0, 1.0, 0.0, 
                             0.0, 0.0, 1.0, 0.0, 0.0,
                              0.0, 0.0, 0.0, 0.0, 0.0};
+
 double fogo_medio[25] =     {0.0, 1.0, 1.0, 1.0, 0.0,
                             1.0, 1.0, 1.0, 1.0, 1.0,
                             1.0, 1.0, 1.0, 1.0, 1.0,
                             0.0, 1.0, 1.0, 1.0, 0.0,
                             0.0, 0.0, 1.0, 0.0, 0.0};
+
 double carinha_alegre[25] = {1.0, 1.0, 0.0, 1.0, 1.0,
                             1.0, 1.0, 0.0, 1.0, 1.0,
                             0.0, 0.0, 1.0, 0.0, 0.0,
@@ -457,17 +484,22 @@ void init_keypad() {
 void menu() {
     printf("\nMenu de Opcoes:\n");
     printf("Escolha uma opcao pressionando a tecla correspondente...\n");
+    printf("A - Desliga todos os LEDs\n");
+    printf("B - Liga todos os LEDs em azul a 100%%\n");
+    printf("C - Liga todos os LEDs em vermelho a 80%%\n");
+    printf("D - Liga todos os LEDs em verde a 50%%\n");
+    printf("# - Liga todos os LEDs em branco a 20%%\n");
+    printf("* - Inicia reboot do código\n");
+    printf("0 - Melodia\n");
     printf("1 - Seta para Cima, Seta para Baixo, Carinha Feliz, Letra T e Letra M\n");
     printf("2 - Coracão Piscando\n"); 
-    printf("6 - Rosto triste para alegre\n"); 
-    printf("7 - Quadrado Crescente\n");  
-    printf("9 - Circulo Giratório\n");
+    printf("3 - Ondas Coloridas\n");
     printf("4 - Setas\n");
-    printf("B - Desenho a definir\n");
-    printf("C - Desenho a definir\n"); // ADICIONE O NOME DA SUA IMAGEM
-    printf("D - Desenho a definir\n");
-    printf("* - Desenho a definir\n");
-    printf("# - LEDs \n");
+    printf("5 - Super Nova\n");
+    printf("6 - Rosto triste para alegre\n"); 
+    printf("7 - Quadrado Crescente\n"); 
+    printf("8 - Animacao Indisponivel\n"); 
+    printf("9 - Circulo Giratório\n");
 }
 
 // Função para ligar LEDs brancas com 20% de intensidade
@@ -493,6 +525,7 @@ void animação_alexandro(int n) {
     desenho_pio(desenhar_quadrado_A3, n);
     sleep_ms(350);
 }
+
 void animação_mariana(int n) {
     desenho_pio(seta_1, n);
     sleep_ms(600);
@@ -606,6 +639,42 @@ void animacao_ylo(uint16_t ciclos, uint16_t delay_ms) {
     printf("Animação 'Círculo Giratório' finalizada após %d ciclos.\n", ciclos);
 }
 
+void animacao_edna() {
+    desenho_pio(frame1, 4);
+    sleep_ms(200);
+    desenho_pio(frame2, 4);
+    sleep_ms(200);
+    desenho_pio(frame3, 4);
+    sleep_ms(200);
+    desenho_pio(frame4, 4);
+    sleep_ms(200);
+    desenho_pio(frame5, 1);
+    sleep_ms(200);
+}
+
+// Sequência de notas para a explosão da animação 5
+void explosao() {
+    // Parte 1: Crescendo (aumento rápido de frequência)
+    Tocar_nota(220, 50); // Lá2 (grave)
+    Tocar_nota(330, 50); // Mi3
+    Tocar_nota(440, 50); // Lá3
+    Tocar_nota(660, 50); // Mi4
+    Tocar_nota(880, 50); // Lá4
+
+    // Parte 2: Estouro (alta frequência, curta duração)
+    Tocar_nota(1000, 20); // Frequência alta para representar o pico
+    Tocar_nota(1200, 20);
+    Tocar_nota(1400, 20);
+
+    // Parte 3: Decaimento (queda abrupta de frequência)
+    Tocar_nota(880, 100); // Lá4
+    Tocar_nota(440, 100); // Lá3
+    Tocar_nota(220, 150); // Lá2 (grave, representando o eco da explosão)
+
+    // Parte 4: Grave e longo (ressonância final)
+    Tocar_nota(110, 300); // Lá1 (grave e longo para o final)
+}
+
 // Função para converter a posição do matriz para uma posição do vetor.
 int getIndex(int x, int y) {
     // Se a linha for par (0, 2, 4), percorremos da esquerda para a direita.
@@ -703,7 +772,10 @@ int main() {
             break;
 
             case '5':  // Animação da Edna
-                // Adiconar rotina aqui.
+                animacao_edna();
+                explosao();
+                animacao_edna();
+                explosao();
                 printf("Animação do botão 5 foi acionada.\n");
             break;
 
@@ -721,7 +793,7 @@ int main() {
 
             case '8':  // Animação do Israel
                 // Adiconar rotina aqui.
-                printf("Animação do botão 8 foi acionada.\n");
+                printf("Animação do botão 8 não foi acionada.\n");
             break;
 
             case '9':  // Animação do Ylo
