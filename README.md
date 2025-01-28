@@ -138,7 +138,7 @@
       </tr>
     <tr>
       <td>5</td>
-      <td> </td>
+      <td>Super Nova</td>
       </tr>
     <tr>
       <td>6</td>
@@ -147,11 +147,7 @@
     <tr>
       <td>7</td>
       <td>Quadrado Crescente</td>
-      </tr>
-    <tr>
-      <td>8</td>
-      <td></td>
-      </tr>
+      </tr>    
     <tr>
       <td>9</td>
       <td>Circulo Giratório</td>
@@ -164,8 +160,8 @@
 
 <h3>Wokwi integrado ao VSCode</h3>
 
-<p>Google Drive: </p>
-<p>YouTube: </p>
+<p>Google Drive: https://drive.google.com/file/d/17XY5b8wbyD9tpliFEDhhGVkS4MPGLu0o</p>
+<p>YouTube: https://youtu.be/ESiGG_izom4</p>
 
    <h1>Como Executar o Projeto</h1>
         <h2>Clone o Repositório</h2>

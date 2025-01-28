@@ -526,7 +526,7 @@ void animação_alexandro(int n) {
     sleep_ms(350);
 }
 
-void animação_mariana(int n) {
+void animacao_mariana(int n) {
     desenho_pio(seta_1, n);
     sleep_ms(600);
     Tocar_apagando(); 
@@ -752,7 +752,7 @@ int main() {
             break;
             
             case '1':  // Animação da Mariana
-                animação_mariana(5); // Adiconada a rotina aqui
+                animacao_mariana(5); // Adiconada a rotina aqui
                 printf("Animação do botão 1 foi acionada.\n");
             break;
 
