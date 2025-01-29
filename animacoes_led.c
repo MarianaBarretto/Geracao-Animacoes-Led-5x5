@@ -6,17 +6,23 @@
 #include "hardware/clocks.h"
 #include "hardware/adc.h"
 #include "pico/bootrom.h"
+
 //arquivo .pio
 #include "animacoes_led.pio.h"
+
 //número de LEDs
 #define NUM_PIXELS 25
+
 //pino de saída
 #define OUT_PIN 19
+
 // GPIO do buzzer
 #define BUZZER 21 // Buzzer na GPIO 21
+
 //Variáveis Globais
 PIO pio;
 uint sm;
+
 // Frequências das notas (em Hz)
 #define DO 261
 #define RE 293
@@ -26,12 +32,15 @@ uint sm;
 #define LA 440
 #define SI 493
 #define DO_OCTAVE 523
+
 // Definições do teclado matricial
 #define ROWS 4
 #define COLS 4
+
 // Define as linhas e colunas do teclado matricial (ajustado com os novos pinos)
 uint row_pins[ROWS] = {8, 7, 6, 5};    // GPIOs para as linhas (R1 a R4)
 uint col_pins[COLS] = {4, 3, 2, 1};    // GPIOs para as colunas (C1 a C4)
+
 // Mapa das teclas do teclado matricial
 char KEY_MAP[16] = {
     '1', '2', '3', 'A',
