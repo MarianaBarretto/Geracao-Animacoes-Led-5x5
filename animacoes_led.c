@@ -498,7 +498,7 @@ void menu() {
     printf("5 - Super Nova\n");
     printf("6 - Rosto triste para alegre\n"); 
     printf("7 - Quadrado Crescente\n"); 
-    printf("8 - Pong ATARI 1972\n"); 
+    printf("8 - Pong ATARI 1972\n"); // adionado novo commit
     printf("9 - Circulo Giratório\n");
 }
 
