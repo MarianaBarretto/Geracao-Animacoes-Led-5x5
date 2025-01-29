@@ -149,6 +149,11 @@
       <td>Quadrado Crescente</td>
       </tr>    
     <tr>
+    <tr>
+      <td>8</td>
+      <td>Pong ATARI 1972</td>
+      </tr>    
+    <tr>
       <td>9</td>
       <td>Circulo Giratório</td>
       </tr>
@@ -160,8 +165,8 @@
 
 <h3>Wokwi integrado ao VSCode</h3>
 
-<p>Google Drive: https://drive.google.com/file/d/17XY5b8wbyD9tpliFEDhhGVkS4MPGLu0o</p>
-<p>YouTube: https://youtu.be/ESiGG_izom4</p>
+<p>Google Drive: https://drive.google.com/file/d/1fgAJERRxqpUFRXN1lQGHSylninKYFOGg</p>
+<p>YouTube: https://youtu.be/TtVjypBC0ME</p>
 
    <h1>Como Executar o Projeto</h1>
         <h2>Clone o Repositório</h2>
